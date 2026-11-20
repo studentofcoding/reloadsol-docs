@@ -1,0 +1,10 @@
+root: ./
+
+structure:
+  readme: README.md
+  summary: SUMMARY.md
+
+redirects:
+  getting-started: getting-started/quickstart.md
+  api: developer-reference/api-reference.md
+  glossary: resources/glossary.md
