@@ -72,8 +72,3 @@ $$R = \frac{\text{Average Win \%}}{|\text{Average Loss \%}|} \qquad \text{Break-
 {% hint style="tip" %}
 **Test Exit Changes Before Shipping:** Use `/admin/replay` to replay candidate stop-loss, take-profit, and trailing-stop rules against reloadSol's stored 1-minute `token_ohlc_bars` (net of fees) before modifying any live strategy config.
 {% endhint %}
-
----
-
-## 5. Interactive Lab: In-Flight OHLC 3-Pattern Defense
-

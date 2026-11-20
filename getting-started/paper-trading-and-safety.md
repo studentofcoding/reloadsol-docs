@@ -65,8 +65,3 @@ $$\text{Fee Drag (\%)} = \frac{\text{Round-Trip Fixed Fee (SOL)}}{\text{Position
 {% hint style="info" %}
 **Net vs. Gross Reporting:** In `strategy_outcomes`, `pnl_pct` is stored **net of fees**, while `gross_pnl_pct`, `fee_sol`, `fee_pct`, and `fee_model` are preserved inside `features` so analysts can audit both raw signal quality and net-of-cost expectancy.
 {% endhint %}
-
----
-
-## Interactive Fee-Drag & Payoff-Ratio Calculator
-
