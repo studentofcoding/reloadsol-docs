@@ -1,18 +1,14 @@
 $schema: https://api.gitbook.com/gitbook-docs.yaml
+version: 1
 
 site:
   title: ReloadSOL Documentation
   structure:
-    - type: section
-      key: section-reloadsol-docs
-      title: Documentation
-      path: ""
+    - type: space
+      key: space-reloadsol-docs
+      title: ReloadSOL Docs
+      path: docs
       default: true
-      children:
-        - type: space
-          key: space-reloadsol-core
-          title: ReloadSOL Docs
-          path: ""
-          default: true
-          content:
-            directory: ./
+      content:
+        directory: ./
+        language: en
