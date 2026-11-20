@@ -12,6 +12,16 @@ For quantitative operators and developers, reloadSol ships a full institutional-
 
 ---
 
+## Interactive Strategy & Trading Mechanics Lab
+
+Explore reloadSol's live strategy playbooks, **In-Flight OHLC 3-Pattern Defense**, **4-Phase Viral Runners Lifecycle**, and **Fee-Drag / Payoff-Ratio Calculator** interactively:
+
+{% embed url="https://studentofcoding.github.io/reloadsol-docs/widgets/index.html?view=strategies" %}
+Interactive reloadSol Strategy & Trading Mechanics Lab
+{% endembed %}
+
+---
+
 ## Choose Your Track
 
 | Audience | Start Here | What You Will Learn |

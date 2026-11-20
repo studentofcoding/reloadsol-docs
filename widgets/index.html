@@ -181,14 +181,39 @@
     <div class="topbar">
       <div class="brand"><span class="dot"></span> reloadSol Interactive Lab</div>
       <div class="tabs">
-        <button class="tab active" data-tab="ohlc">OHLC 3-Pattern Defense</button>
+        <button class="tab active" data-tab="strategies">Strategy Simulator</button>
+        <button class="tab" data-tab="ohlc">OHLC 3-Pattern Defense</button>
         <button class="tab" data-tab="lifecycle">Viral Runners &amp; Regime</button>
         <button class="tab" data-tab="calculator">Fee-Drag &amp; Payoff Calc</button>
       </div>
     </div>
 
+    <!-- TAB 0: MULTI-STRATEGY SIMULATOR -->
+    <div id="panel-strategies" class="panel active">
+      <div class="controls">
+        <button class="pill active" data-strat="early_surge">Early Surge Scalp</button>
+        <button class="pill" data-strat="post_pump">Post-Pump Base (P2)</button>
+        <button class="pill" data-strat="vwap_shelf">Mid-Cap VWAP Shelf</button>
+        <button class="pill" data-strat="att">ATT Trending Bot</button>
+        <button class="pill" data-strat="dlmm">DLMM Fee Accumulator</button>
+      </div>
+      <div class="slider-row">
+        <div class="slider-box">
+          <label><span>Base Stake (SOL)</span><strong id="stratStakeVal">0.025 SOL</strong></label>
+          <input type="range" id="stratStakeSlider" min="0.005" max="0.200" step="0.005" value="0.025" />
+        </div>
+        <div class="slider-box">
+          <label><span>Market Climate Multiplier</span><strong id="stratClimateVal">Range (0.75×)</strong></label>
+          <input type="range" id="stratClimateSlider" min="1" max="4" step="1" value="3" />
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="stratChart"></canvas></div>
+      <div class="grid" id="stratStats"></div>
+      <div class="note" id="stratNote"></div>
+    </div>
+
     <!-- TAB 1: OHLC 3-PATTERN DEFENSE -->
-    <div id="panel-ohlc" class="panel active">
+    <div id="panel-ohlc" class="panel">
       <div class="controls">
         <button class="pill active" data-pattern="C">Pattern C: Dynamic Ratchet &amp; 2-Bar Trail</button>
         <button class="pill" data-pattern="A">Pattern A: 3-Bar Breakdown Cut</button>
@@ -249,7 +274,124 @@
     }
     document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => activateTab(btn.dataset.tab)));
     const initialView = new URLSearchParams(location.search).get('view');
-    if (['ohlc', 'lifecycle', 'calculator'].includes(initialView)) activateTab(initialView);
+    if (['strategies', 'ohlc', 'lifecycle', 'calculator'].includes(initialView)) activateTab(initialView);
+
+    // --- TAB 0: MULTI-STRATEGY SIMULATOR ---
+    const STRATEGIES = {
+      early_surge: {
+        name: 'signals_early_surge_scalp',
+        sl: '-6% (Pattern A) / -5% Stall',
+        tp: 'BE +18% · 2-Bar Trail ≥ +30%',
+        trades: [22, -6, 38, -5, 19, -6, 44, -5, 28, -6, 52, 18],
+        note: 'Fast-cycle launch-to-surge scalper ($15k→$60k MC) on clean tokens (bundlers < 20%, clean deployer). Uses In-Flight OHLC 3-Pattern Defense as an active sell machine.'
+      },
+      post_pump: {
+        name: 'signals_post_pump_base',
+        sl: '-10% (DEFENSIVE) / -8% Warn',
+        tp: '+15% Graduation → Phase 3',
+        trades: [18, -8, 26, 32, -10, 21, 40, -7, 16, 29, -8, 35],
+        note: 'Phase 2 Viral Runners strategy: waits +45m/+120m/+180m (regime-scaled) for tight consolidation (≤18–25% range) before entering post-pump continuation.'
+      },
+      vwap_shelf: {
+        name: 'signals_vwap_shelf_breakout',
+        sl: '-10% Hard / Pattern A Cut',
+        tp: 'TP1 +25% · TP2 +50% · EMA-9 Trail',
+        trades: [28, 48, -9, 25, -10, 54, 26, -8, 34, 52, -10, 41],
+        note: 'Mid-Cap ($250k–$1M) 15m Anchored VWAP breakout with Bollinger Band squeeze ≤ 12%, positive CVD, deep pool TVL ($40k–$150k+), and Rule 5 Brand Impersonation Veto.'
+      },
+      att: {
+        name: 'att (Trending Bot)',
+        sl: '-35% Static SL · 24h Max Hold',
+        tp: 'TP1 +45% (Sell 90%) · TP2 +100%',
+        trades: [45, -35, 92, -35, 45, 48, -35, 100, -35, 45, 60, -35],
+        note: 'Canonical trending_bot playbook consuming GMGN market rank (≥200k MC floor) with 24h re-entry cooldown and max 2 purchases per token.'
+      },
+      dlmm: {
+        name: 'dlmm_range_fee_accumulator',
+        sl: '-10% SL · 16m OOR Timeout',
+        tp: '+5% TP / ≥15% Daily Fee Yield',
+        trades: [5.2, 4.8, -6.5, 5.1, 6.0, 4.4, -8.2, 5.5, 4.9, 5.3, 4.7, 5.8],
+        note: 'Non-directional Meteora Concentrated DLMM (±15% range) harvesting swap fees on range-bound mid-cap chop, managed by Hunter (300s) + Healer (60s).'
+      }
+    };
+    const STRAT_CLIMATES = [
+      null,
+      { name: 'De-risk (0.25×)', scale: 0.25 },
+      { name: 'Mixed (0.50×)', scale: 0.50 },
+      { name: 'Range (0.75×)', scale: 0.75 },
+      { name: 'Hype (1.00×)', scale: 1.00 }
+    ];
+    let currentStrat = 'early_surge';
+    let stratChart;
+    function renderStrat() {
+      const s = STRATEGIES[currentStrat];
+      const baseStake = Number(document.getElementById('stratStakeSlider').value);
+      const cl = STRAT_CLIMATES[Number(document.getElementById('stratClimateSlider').value)];
+      const effStake = baseStake * cl.scale;
+      const flatFee = currentStrat === 'dlmm' ? 0 : 0.0003;
+      const feePct = (flatFee / effStake) * 100;
+
+      document.getElementById('stratStakeVal').textContent = baseStake.toFixed(3) + ' SOL';
+      document.getElementById('stratClimateVal').textContent = cl.name;
+
+      let cumSol = 0;
+      const curve = [0];
+      let wins = 0;
+      s.trades.forEach(pct => {
+        const netPct = pct - feePct;
+        if (netPct >= 0) wins++;
+        cumSol += effStake * (netPct / 100);
+        curve.push(Number(cumSol.toFixed(5)));
+      });
+      const winRate = ((wins / s.trades.length) * 100).toFixed(0);
+
+      const ctx = document.getElementById('stratChart').getContext('2d');
+      if (stratChart) stratChart.destroy();
+      stratChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: curve.map((_, i) => i === 0 ? 'Start' : 'T' + i),
+          datasets: [{
+            label: s.name + ' Cumulative Net P&L (SOL)',
+            data: curve,
+            borderColor: '#a3e635',
+            backgroundColor: 'rgba(163, 230, 53, 0.14)',
+            fill: true,
+            tension: 0.25,
+            pointRadius: 3.5,
+            pointBackgroundColor: curve.map((v, i) => i === 0 ? '#8a8f8a' : (v >= curve[i - 1] ? '#4ade80' : '#f87171'))
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#ccc' } } },
+          scales: {
+            x: { ticks: { color: '#8a8f8a' }, grid: { color: '#1f1f24' } },
+            y: { ticks: { color: '#8a8f8a', callback: v => v.toFixed(3) + ' SOL' }, grid: { color: '#1f1f24' } }
+          }
+        }
+      });
+
+      document.getElementById('stratStats').innerHTML = `
+        <div class="stat"><div class="label">Effective Stake</div><div class="val">${effStake.toFixed(4)} SOL</div></div>
+        <div class="stat"><div class="label">12-Trade Net P&amp;L</div><div class="val ${cumSol >= 0 ? 'pos' : 'neg'}">${cumSol >= 0 ? '+' : ''}${cumSol.toFixed(4)} SOL</div></div>
+        <div class="stat"><div class="label">Win Rate (Net)</div><div class="val acc">${winRate}%</div></div>
+        <div class="stat"><div class="label">Exit Profile</div><div class="val" style="font-size:12px;line-height:1.35">${s.tp}<br/><span style="color:#f87171">${s.sl}</span></div></div>
+      `;
+      document.getElementById('stratNote').textContent = s.note;
+    }
+    document.querySelectorAll('[data-strat]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-strat]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentStrat = btn.dataset.strat;
+        renderStrat();
+      });
+    });
+    document.getElementById('stratStakeSlider').addEventListener('input', renderStrat);
+    document.getElementById('stratClimateSlider').addEventListener('input', renderStrat);
+    renderStrat();
 
     // --- TAB 1: OHLC 3-PATTERN DEFENSE ---
     const PATTERNS = {
