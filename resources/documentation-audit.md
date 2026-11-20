@@ -40,13 +40,62 @@ flowchart TD
 
 ---
 
-## 3. Recommended Next Steps for Publishing & Maintenance
+## 3. Publishing & Maintenance Standard
 
-1. **Connect GitBook Git Sync:** Point a GitBook space at this repository with root directory `gitbook/` (`.gitbook.yaml` is already configured).
-2. **Add Annotated UI Screenshots:** Capture and drop light/dark screenshots into `gitbook/.gitbook/assets/` for:
-   * `/` Wallet Check + Ask-for-Fund banner
-   * `/sell/solana` dust categories & burn-close modal
-   * `/swap/robinhood` Permit2 readiness checklist & receipt confirmation modal
-   * `/pnl` open positions & inline Fast Sell
-   * `/dev/algo-tester`, `/admin/lifecycle`, and `/analytics/knowledge-graph`
-3. **Keep Docs Coupled to PRs:** Whenever a new route is added to `src/config/route-network.ts`, `src/config/api-access.ts`, or a new worker is registered in `main.go`, update the corresponding table in `gitbook/developer-reference/api-reference.md` or `smart-contracts-and-cron.md` in the same PR.
+The docs publish through **two hops**, and only the first is a repository concern:
+
+```
+gitbook/  ──npm run docs:sync──▶  studentofcoding/reloadsol-docs  ──▶  GitHub Pages (/widgets)
+              (this repo)                  (public mirror)      └─▶  GitBook Git Sync (prose)
+```
+
+### The one command
+
+**Any change under `gitbook/` ends with:**
+
+```bash
+npm run docs:sync      # link gate → mirror → commit → push
+npm run docs:check     # same, prints the diff, stops before commit
+```
+
+`scripts/sync-gitbook-docs.sh` runs a link gate (every page reachable from `SUMMARY.md`, no orphan, no
+broken intra-page link), mirrors with `rsync --delete` so deletions propagate, asserts the two
+Pages-critical files survived, then commits and pushes to the mirror. A re-run with no changes prints
+*"already up to date"* — it is idempotent.
+
+{% hint style="warning" %}
+**Two files are load-bearing, and their absence is a site-wide 404.**
+GitHub Pages builds the mirror with the legacy **Jekyll** pipeline, and GitBook's
+`{% hint %}` / `{% tabs %}` / `{% embed %}` syntax is **Liquid** to Jekyll. 61 such tags failed every
+build — "Page build failed." — so nothing was served, including the self-contained
+`/widgets/index.html` interactive lab.
+
+* **`.nojekyll`** (repo root) serves the tree as-is. Markdown is rendered by GitBook, never by Pages.
+* **`index.html`** (repo root) is the site landing page; without it the root 404s because there is no
+  document to render.
+
+`npm run docs:sync` refuses to publish if either is missing after the mirror.
+{% endhint %}
+
+### Rules
+
+1. **Never hand-edit `reloadsol-docs`.** It is a mirror; the next sync overwrites it.
+2. **A page must be reachable from `SUMMARY.md`** — an unreferenced page is unpublished, and the gate
+   fails rather than silently dropping it.
+3. **Do not add a GitHub Actions workflow for this.** Actions is parked on the account's billing limit
+   (`ci.yml`, 2026-10-28) and stays that way by choice; the local command is the mechanism.
+4. **Keep docs coupled to changes.** When a route is added to `src/config/route-network.ts` or
+   `src/config/api-access.ts`, or a worker is registered in `main.go` / `worker_tracker.go`, update the
+   corresponding table in `developer-reference/api-reference.md` or `smart-contracts-and-cron.md` in the
+   same change.
+
+GitBook's own Git Sync (space settings → Git Sync → `studentofcoding/reloadsol-docs`, branch `main`,
+directory `/`) is a **one-time UI setup** on the GitBook side; it needs nothing from this repository and
+polls on its own schedule.
+
+### Still outstanding
+
+**Annotated UI screenshots** — deliberately not fabricated; capture into `gitbook/.gitbook/assets/` for
+`/` (Wallet Check), `/sell/solana` (dust categories, burn-close modal), `/swap/robinhood` (Permit2
+readiness, receipt modal), `/pnl` (inline Fast Sell), and the three consoles (`/dev/algo-tester`,
+`/admin/lifecycle`, `/analytics/knowledge-graph`).
