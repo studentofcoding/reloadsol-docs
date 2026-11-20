@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>reloadSol — Interactive Trading &amp; Strategy Lab</title>
+<style>
+  :root { --bg:#000; --surface:#111113; --border:#2a2a2e; --accent:#a3e635; --text:#fff; --dim:#8a8f8a; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(135deg,#000 0%,#111113 100%); color:var(--text);
+         font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,sans-serif;
+         min-height:100vh; display:grid; place-items:center; padding:24px; }
+  main { width:100%; max-width:640px; }
+  h1 { font-size:1.75rem; letter-spacing:-.02em; }
+  p  { color:var(--dim); margin-top:.75rem; line-height:1.6; }
+  .grid { display:grid; gap:.75rem; margin-top:1.75rem; }
+  a.card { display:block; padding:1rem 1.25rem; border:1px solid var(--border); border-radius:12px;
+           background:var(--surface); color:var(--text); text-decoration:none; transition:.15s; }
+  a.card:hover { border-color:var(--accent); background:#16161a; }
+  a.card strong { display:block; font-size:1rem; }
+  a.card span { color:var(--dim); font-size:.85rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>reloadSol — Interactive Trading &amp; Strategy Lab</h1>
+  <p>Interactive explainers for the strategies, exit defense, lifecycle and fee math described in the reloadSol documentation.</p>
+  <div class="grid">
+    <a class="card" href="./widgets/index.html?view=strategies"><strong>Strategy playbooks</strong><span>Registered strategies, parameters and payoff logic</span></a>
+    <a class="card" href="./widgets/index.html?view=ohlc"><strong>In-Flight OHLC 3-Pattern Defense</strong><span>Pattern A / B / C exit mechanics</span></a>
+    <a class="card" href="./widgets/index.html?view=lifecycle"><strong>4-Phase Viral Runners Lifecycle</strong><span>Momentum → base → breakout → reaccumulation</span></a>
+    <a class="card" href="./widgets/index.html?view=calculator"><strong>Fee-Drag &amp; Payoff-Ratio Calculator</strong><span>Fixed-cost drag and break-even win rate</span></a>
+  </div>
+  <p style="margin-top:1.5rem;font-size:.8rem">Static pages served by GitHub Pages. Full documentation is published through GitBook.</p>
+</main>
+</body>
+</html>
