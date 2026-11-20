@@ -6,7 +6,7 @@ description: Execute focused single-pair swaps on Solana via Jupiter Terminal an
 
 **Routes:** `/swap`, `/swap/solana`, `/swap/robinhood`
 
-When you want to swap a single pair with full route visibility—rather than a multi-token batch—use `/swap`. ReloadSOL automatically renders the native execution engine for your active chain.
+When you want to swap a single pair with full route visibility—rather than a multi-token batch—use `/swap`. reloadSol automatically renders the native execution engine for your active chain.
 
 ---
 
@@ -22,11 +22,11 @@ On Solana Mainnet, `/swap` embeds the **Jupiter Terminal** widget pre-configured
 
 ## Robinhood Chain: RhSwap (`/swap/robinhood`)
 
-On Robinhood Chain (`4663`), `/swap` renders ReloadSOL's in-house **RhSwap Panel** (`RhGmgnSwapPanel.tsx`), supporting both quote-pair (`ETH`/`WETH`/`USDG` ↔ token) and direct token-to-token swaps.
+On Robinhood Chain (`4663`), `/swap` renders reloadSol's in-house **RhSwap Panel** (`RhGmgnSwapPanel.tsx`), supporting both quote-pair (`ETH`/`WETH`/`USDG` ↔ token) and direct token-to-token swaps.
 
 ### Parent Wallet Execution Precedence
 
-When trading with a browser wallet (Rabby / EIP-6963), ReloadSOL automatically selects the cleanest available execution lane:
+When trading with a browser wallet (Rabby / EIP-6963), reloadSol automatically selects the cleanest available execution lane:
 
 ```mermaid
 flowchart TD

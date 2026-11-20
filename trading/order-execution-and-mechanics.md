@@ -1,5 +1,5 @@
 ---
-description: Technical deep dive into ReloadSOL's quoting engine, Jupiter Swap V2 managed landing, dynamic slippage, price impact caps, fees, and receipt-gated trade confirmation.
+description: Technical deep dive into reloadSol's quoting engine, Jupiter Swap V2 managed landing, dynamic slippage, price impact caps, fees, and receipt-gated trade confirmation.
 ---
 
 # Order Execution, Slippage & Fees
@@ -10,7 +10,7 @@ Understanding how orders are quoted, routed, protected against slippage, and con
 
 ## 1. Two-Tier Quoting Architecture (Solana)
 
-ReloadSOL separates **display estimates** from **executable orders** through a single unified quote engine (`src/utils/quote-engine.ts`, `src/hooks/useQuote.ts`) so that UI previews remain instantaneous without starving the execution rate limit:
+reloadSol separates **display estimates** from **executable orders** through a single unified quote engine (`src/utils/quote-engine.ts`, `src/hooks/useQuote.ts`) so that UI previews remain instantaneous without starving the execution rate limit:
 
 | Purpose | Primary Provider | Caching | Use Case |
 | :--- | :--- | :--- | :--- |
@@ -28,19 +28,19 @@ ReloadSOL separates **display estimates** from **executable orders** through a s
 
 Solana desk swaps execute via **Jupiter Swap V2** (`GET /order` → wallet sign → `POST /execute`):
 
-* **Managed Landing:** When `/order` returns a `requestId` and your wallet returns an unmodified transaction message, ReloadSOL submits the signed transaction to Jupiter's `/execute` endpoint. Typical end-to-end confirmation is **~1.5s–2.1s** (~`668 ms` on-chain), avoiding the 7–13 second RPC polling lag of raw broadcasts.
-* **Resilient Fallback:** If `/execute` is unavailable or the wallet refreshed the blockhash, ReloadSOL falls back to **Shyft RPC** (rank-0 send lane) with WebSocket confirmation and Helius index failover.
+* **Managed Landing:** When `/order` returns a `requestId` and your wallet returns an unmodified transaction message, reloadSol submits the signed transaction to Jupiter's `/execute` endpoint. Typical end-to-end confirmation is **~1.5s–2.1s** (~`668 ms` on-chain), avoiding the 7–13 second RPC polling lag of raw broadcasts.
+* **Resilient Fallback:** If `/execute` is unavailable or the wallet refreshed the blockhash, reloadSol falls back to **Shyft RPC** (rank-0 send lane) with WebSocket confirmation and Helius index failover.
 
 ---
 
 ## 3. Slippage & Price Impact Controls
 
 ### Dynamic Slippage
-Volatile on-chain pairs frequently move between quote time and block inclusion. ReloadSOL calculates dynamic slippage automatically based on volatility brackets (`SPEC-trading-efficiency-and-slippage-refinement-v1`):
+Volatile on-chain pairs frequently move between quote time and block inclusion. reloadSol calculates dynamic slippage automatically based on volatility brackets (`SPEC-trading-efficiency-and-slippage-refinement-v1`):
 
 * **Floor:** `50 bps` (`0.50%`)
 * **Ceiling:** `1,000 bps` (`10.00%`)
-* **Intent-Aware High-Slippage Prompt (`shouldPromptHighSlippage`):** If you manually override slippage to a high value, ReloadSOL respects your explicit intent and avoids nagging with redundant confirmation dialogs while still warning when an automatic bracket spikes.
+* **Intent-Aware High-Slippage Prompt (`shouldPromptHighSlippage`):** If you manually override slippage to a high value, reloadSol respects your explicit intent and avoids nagging with redundant confirmation dialogs while still warning when an automatic bracket spikes.
 
 ### Price Impact Guard
 * **Maximum Impact Ceiling (`SWAP_QUOTE_MAX_IMPACT_PCT`):** Defaults to **`15%`**. Any route whose quoted price impact exceeds this ceiling is discarded before signing to protect traders from thin pools and sandwich extraction.
@@ -49,7 +49,7 @@ Volatile on-chain pairs frequently move between quote time and block inclusion. 
 
 ## 4. Platform Fee Settlement
 
-ReloadSOL's platform fee architecture (`SPEC-platform-fee-settlement-v1`) is designed around two strict rules: **never slow down a swap** and **never cause a trade to fail**.
+reloadSol's platform fee architecture (`SPEC-platform-fee-settlement-v1`) is designed around two strict rules: **never slow down a swap** and **never cause a trade to fail**.
 
 * **Standard Fee Rate:** `25 bps` (`0.25%`) native SOL transfer when settlement is enabled (`PLATFORM_FEE_SETTLE` runtime-delivered via `GET /api/swap/route-config`).
 * **Zero Extra Wallet Prompts:** When active, the fee transfer is appended to the same `signAllTransactions` array (`N + 1`) using the batch's existing blockhash (zero extra RPC round trips).
@@ -59,7 +59,7 @@ ReloadSOL's platform fee architecture (`SPEC-platform-fee-settlement-v1`) is des
 
 ## 5. Receipt-Gated Confirmation Lifecycle
 
-ReloadSOL **never** marks a trade `confirmed` just because a wallet signed or an RPC accepted the bytes. State transitions are strictly receipt-gated:
+reloadSol **never** marks a trade `confirmed` just because a wallet signed or an RPC accepted the bytes. State transitions are strictly receipt-gated:
 
 ```mermaid
 sequenceDiagram

@@ -4,13 +4,13 @@ description: Concentrated liquidity provisioning on Meteora DLMM (Solana), alert
 
 # Meteora DLMM, Robinhood CLMM & Arbitrage
 
-Beyond directional spot trading, ReloadSOL includes non-directional yield harvesting and market-neutral arbitrage engines under `/dev/dlmm`, `/dev/pools`, and `/dev/arbitrage`.
+Beyond directional spot trading, reloadSol includes non-directional yield harvesting and market-neutral arbitrage engines under `/dev/dlmm`, `/dev/pools`, and `/dev/arbitrage`.
 
 ---
 
 ## 1. Meteora DLMM Agent (`/dev/dlmm` — Solana)
 
-ReloadSOL operates an automated **Hunter + Healer** liquidity agent for Meteora Dynamic Liquidity Market Maker (DLMM) pools:
+reloadSol operates an automated **Hunter + Healer** liquidity agent for Meteora Dynamic Liquidity Market Maker (DLMM) pools:
 
 ### Hunter (`dlmm_screen`, every `300s`)
 * Queries Meteora pools **sorted by `tvl:desc`** across paginated responses (avoiding dust pools with inflated fee/TVL denominators).
@@ -33,7 +33,7 @@ ReloadSOL operates an automated **Hunter + Healer** liquidity agent for Meteora 
 
 ## 2. Robinhood Chain CLMM Monitor (`/dev/dlmm` — RH Tabs)
 
-For Uniswap v3 and v4-fork Concentrated Liquidity Market Maker (CLMM) positions on **Robinhood Chain (`4663`)**, ReloadSOL runs `rh_clmm_manage` every `300s`:
+For Uniswap v3 and v4-fork Concentrated Liquidity Market Maker (CLMM) positions on **Robinhood Chain (`4663`)**, reloadSol runs `rh_clmm_manage` every `300s`:
 
 * **Strict Alert-Only Mode:** Uses batched **Multicall3** RPC reads to check position range status (in-range vs. out-of-range) and claimable fees across the `dlmm_positions` RH ledger (`pool_key`, `fee`, `tick_spacing`).
 * **Zero Autonomous Signing:** Sends Telegram OOR and fee-claim alerts only—it performs no on-chain writes or automated rebalancing.
@@ -49,7 +49,7 @@ For Uniswap v3 and v4-fork Concentrated Liquidity Market Maker (CLMM) positions 
 
 ## 4. Triangular SOL Arbitrage (`/dev/arbitrage` — Solana Only)
 
-ReloadSOL includes a curated triangular arbitrage scanner (`SOL → Token A → Token B → SOL`) backed by SolanaTracker Raptor (`maxHops` set) and `/api/sol-arb/*`:
+reloadSol includes a curated triangular arbitrage scanner (`SOL → Token A → Token B → SOL`) backed by SolanaTracker Raptor (`maxHops` set) and `/api/sol-arb/*`:
 
 * **Scanner (`sol_arb_scan`, every `60s`):** Evaluates curated pairs via `GET /api/sol-arb/scan` and fires a Telegram alert whenever net profit exceeds `SOL_ARB_MIN_EDGE_LAMPORTS` after fees and slippage.
 * **Execution:** Manual or automated execution via `/api/sol-arb/quote`, `/api/sol-arb/execute`, and `/api/sol-arb/execute-atomic` is strictly gated behind `SOL_ARB_LIVE_ENABLED` (default OFF).

@@ -1,10 +1,10 @@
 ---
-description: Complete directory of ReloadSOL's dev-wallet-gated operational hubs (/dev/*) and read-only evaluation consoles (/admin/*).
+description: Complete directory of reloadSol's dev-wallet-gated operational hubs (/dev/*) and read-only evaluation consoles (/admin/*).
 ---
 
 # Dev & Admin Console Overview
 
-Beyond its public trading pages, ReloadSOL provides two gated operator workspaces:
+Beyond its public trading pages, reloadSol provides two gated operator workspaces:
 
 * **`/dev/*` (Developer & Strategy Tools):** Interactive consoles for configuring strategies, running paper simulations, managing DLMM/CLMM liquidity, scanning arbitrage, inspecting RPC/pool health, and searching tokens across chains.
 * **`/admin/*` (Read-Only Evaluation & Governance Hub):** Quantitative scorecards, ML readiness audits, lifecycle runner telemetry, rug precision/recall metrics, insert-only outcome review, and historical exit replay.
@@ -54,5 +54,5 @@ All `/dev/*` and `/admin/*` pages are guarded by `DevOnlyGate` and dev-wallet se
 | `/admin/lifecycle` | 4-Phase Viral Runners candidate queue, live Macro Market Regime banner, KG badges, bundler %, and granular in-flight exit reasons. |
 | `/admin/rug` | Ban precision and recall by layer, 1m OHLC coverage, verdict coverage, and close-reason breakdown. |
 | `/admin/review` | Insert-only human review queue for severe losses (`≤ -15%` net) and missed rugs (`tb_v1`), feeding `ml_label` back into training exports. |
-| `/admin/replay` | Historical exit-rule replay engine over ReloadSOL's own 1m `token_ohlc_bars` (net of fees, paired scoring). |
+| `/admin/replay` | Historical exit-rule replay engine over reloadSol's own 1m `token_ohlc_bars` (net of fees, paired scoring). |
 | `/admin/runners` & `/admin/transactions` | Daily runners telemetry and platform-wide transaction / portfolio activity diagnostics. |

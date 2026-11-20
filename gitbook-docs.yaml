@@ -2,11 +2,11 @@ $schema: https://api.gitbook.com/gitbook-docs.yaml
 version: 1
 
 site:
-  title: ReloadSOL Documentation
+  title: reloadSol
   structure:
     - type: space
       key: space-reloadsol-docs
-      title: ReloadSOL Docs
+      title: reloadSol
       path: docs
       default: true
       content:

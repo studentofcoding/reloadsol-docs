@@ -1,10 +1,10 @@
 ---
-description: ReloadSOL's LightGBM + ONNX machine learning pipeline, shadow-vs-enforce governance, 4-class OHLC head, and the /admin evaluation suite.
+description: reloadSol's LightGBM + ONNX machine learning pipeline, shadow-vs-enforce governance, 4-class OHLC head, and the /admin evaluation suite.
 ---
 
 # Machine Learning Pipeline & Admin Evaluation
 
-ReloadSOL uses **supervised tabular machine learning (LightGBM exported to ONNX)** to score and rank token entries inside the strategy runtime. Models are trained on the host in Python (`ml/`) and served at sub-millisecond latency inside `reloadsol-web` via `onnxruntime-node` from a read-only bind mount (`/app/ml/artifacts:ro`).
+reloadSol uses **supervised tabular machine learning (LightGBM exported to ONNX)** to score and rank token entries inside the strategy runtime. Models are trained on the host in Python (`ml/`) and served at sub-millisecond latency inside `reloadsol-web` via `onnxruntime-node` from a read-only bind mount (`/app/ml/artifacts:ro`).
 
 ---
 
@@ -21,7 +21,7 @@ ReloadSOL uses **supervised tabular machine learning (LightGBM exported to ONNX)
 
 ## 2. Anti-Leakage & Provenance Rules
 
-ReloadSOL enforces institutional ML hygiene (`SPEC-ml-hardening-v1`, `SPEC-feature-registry-v1`):
+reloadSol enforces institutional ML hygiene (`SPEC-ml-hardening-v1`, `SPEC-feature-registry-v1`):
 
 1. **Entry-Time Features Only:** Models only see features knowable at entry (`log_first_mcap`, 30m social mentions/channels, smart-wallet flags, 60m GMGN activity window around first-seen). Exit prices, monitor snapshots, and post-entry candles are strictly forbidden.
 2. **Time-Ordered 3-Way Splits:** `train_pattern.py` uses `three_way_split()` (train → valid → test in chronological order). Decision thresholds (`0.05–0.95`) are tuned **strictly on validation**; the test holdout is untouched until final reporting.
@@ -46,7 +46,7 @@ ReloadSOL enforces institutional ML hygiene (`SPEC-ml-hardening-v1`, `SPEC-featu
 | **`/admin/strategy`** | Per-strategy scorecard: net & gross P&L, win rate, payoff ratio, stop-loss hit rates, and stake compliance. |
 | **`/admin/rug`** | Layer-by-layer rug ban precision/recall, 1m OHLC coverage, and close-reason distributions. |
 | **`/admin/review`** | Insert-only human audit queue for trades closing `≤ -15%` net and missed rugs (`tb_v1`). Assigning `ml_label` (`skip` / `interesting` / `anomaly`) persists into `strategy_outcomes.features` for future training exports. |
-| **`/admin/replay`** | Replays alternative SL/TP and trailing-stop geometries over ReloadSOL's own 1m `token_ohlc_bars` (net of fees) with paired per-token clustered confidence intervals. |
+| **`/admin/replay`** | Replays alternative SL/TP and trailing-stop geometries over reloadSol's own 1m `token_ohlc_bars` (net of fees) with paired per-token clustered confidence intervals. |
 | **`/admin/graph-edge`** | Interactive relational graph audit for cabal rings, deployer motifs, and multi-strategy consensus cliques. |
 | **`/dev/rug-signal` & `/dev/ohlc-labels`** | Calibration soak console (`rug_v2_shadow`) and visual gallery of first-10-minute Rising vs. Rugged OHLC snapshots. |
 | **`/dev/insight`** | Data-Public Scout strip, Macro Climate indicator (`Safe` / `Not safe` / `Unknown`), and Solana Roster Digger. |

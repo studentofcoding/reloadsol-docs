@@ -1,5 +1,5 @@
 ---
-description: Go from zero to your first dust reload, bulk buy, or portfolio P&L check on ReloadSOL in under 3 minutes.
+description: Go from zero to your first dust reload, bulk buy, or portfolio P&L check on reloadSol in under 3 minutes.
 ---
 
 # Quickstart Guide
@@ -12,9 +12,9 @@ This guide walks you through connecting a wallet, checking recoverable value bef
 
 You do not need to connect a wallet to inspect how much recoverable SOL is sitting in your account.
 
-1. Open the ReloadSOL landing page (`/`).
+1. Open the reloadSol landing page (`/`).
 2. Paste any Solana wallet address into the **Wallet Check** input.
-3. ReloadSOL queries `/api/wallet/preview` (backed by Jupiter Portfolio) and displays:
+3. reloadSol queries `/api/wallet/preview` (backed by Jupiter Portfolio) and displays:
    * **Native SOL balance**
    * **Sellable token value** (tokens with active DEX liquidity)
    * **Reclaimable ATA rent** (~`0.00203928 SOL` per empty Associated Token Account)
@@ -36,13 +36,13 @@ Click **Connect Wallet** in the top navigation bar.
 * **Solana:** Select Phantom, Solflare, Backpack, or another Wallet Adapter wallet.
 * **Robinhood Chain (EVM `4663`):** Select Rabby or another EIP-6963 browser wallet (available when your wallet is whitelisted or an EVM provider is active).
 
-Once connected, ReloadSOL automatically routes you to `/sell/solana` (or `/sell/robinhood` based on your active network).
+Once connected, reloadSol automatically routes you to `/sell/solana` (or `/sell/robinhood` based on your active network).
 {% endstep %}
 
 {% step %}
 ### Review Categorized Holdings
 
-ReloadSOL scans your wallet and automatically groups every token into actionable categories:
+reloadSol scans your wallet and automatically groups every token into actionable categories:
 
 * **Sellable:** Tokens with an active swap route and sufficient liquidity.
 * **Unsellable / Low Liquidity:** Tokens with no viable DEX route or excessive price impact.
@@ -55,14 +55,14 @@ ReloadSOL scans your wallet and automatically groups every token into actionable
 
 1. Use **Dust only**, **Select All**, or click individual rows (with quick percentage presets: `10%`, `20%`, `50%`, `75%`, `100%`).
 2. Keep the default output asset (**SOL** on Solana, **ETH** on Robinhood) or select a custom output token mint/address on the full `/sell` screen.
-3. Wait briefly for live quotes to load. ReloadSOL displays estimated output, price impact, and slippage before you sign.
+3. Wait briefly for live quotes to load. reloadSol displays estimated output, price impact, and slippage before you sign.
 {% endstep %}
 
 {% step %}
 ### Simulate, Sign & Confirm
 
 1. Click **Sell / Reload**.
-2. ReloadSOL simulates every transaction leg against current RPC state and checks for stale blockhashes or reverting accounts.
+2. reloadSol simulates every transaction leg against current RPC state and checks for stale blockhashes or reverting accounts.
 3. Approve the transaction batch in your wallet:
    * **Solana:** One `signAllTransactions` approval for the batch (and packed close-account chunks).
    * **Robinhood Chain:** One atomic `executeBatch` signature (after one-time Permit2 setup) or sequential Approve + Swap prompts.

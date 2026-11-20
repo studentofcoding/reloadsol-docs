@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Welcome to ReloadSOL](README.md)
+* [Welcome to reloadSol](README.md)
 
 ## Getting Started
 

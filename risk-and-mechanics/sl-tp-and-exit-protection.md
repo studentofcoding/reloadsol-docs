@@ -1,12 +1,12 @@
 ---
-description: How ReloadSOL's unified SL/TP Monitor, In-Flight OHLC 3-Pattern Defense, dynamic trailing ratchets, and cross-chain rug protections cap drawdowns and lock in runner profits.
+description: How reloadSol's unified SL/TP Monitor, In-Flight OHLC 3-Pattern Defense, dynamic trailing ratchets, and cross-chain rug protections cap drawdowns and lock in runner profits.
 ---
 
 # Stop-Loss, Take-Profit & In-Flight OHLC Defense
 
 In volatile on-chain markets, entry selection alone does not produce positive expectancy—**exit discipline** determines your payoff ratio ($R = \frac{\text{Avg Win}}{\text{Avg Loss}}$) and break-even win rate.
 
-ReloadSOL enforces a **single-owner exit architecture** (Exit Standard S9) combined with active **In-Flight OHLC 3-Pattern Defense** to stop bleeders early and prevent `+25%` winners from round-tripping into losses.
+reloadSol enforces a **single-owner exit architecture** (Exit Standard S9) combined with active **In-Flight OHLC 3-Pattern Defense** to stop bleeders early and prevent `+25%` winners from round-tripping into losses.
 
 ---
 
@@ -26,7 +26,7 @@ Every open position—manual or automated, paper or live—is tracked in `sl_tp_
 
 Static stop-losses (e.g., `-35%`) suffer from two empirical failure modes: slow-bleed tokens that grind all the way to the stop, and fast winners that spike `+20%` and give back 100% of their gains.
 
-ReloadSOL's **In-Flight OHLC 3-Pattern Defense** (`src/strategies/graph/inflight-ohlc-defense.ts`) evaluates live 1-minute candles (`token_ohlc_bars`) across three active rules:
+reloadSol's **In-Flight OHLC 3-Pattern Defense** (`src/strategies/graph/inflight-ohlc-defense.ts`) evaluates live 1-minute candles (`token_ohlc_bars`) across three active rules:
 
 | Pattern | Trigger Condition | Action | Problem Solved |
 | :--- | :--- | :--- | :--- |
@@ -49,7 +49,7 @@ flowchart LR
 
 ## 3. Cross-Chain SL/TP Standardization & Rug Gap-Down Protection
 
-On **Robinhood Chain (`4663`)**, pool-draining rugs can gap down `-95%` to `-100%` in under 70 seconds if left on a legacy `-50%` fallback stop. ReloadSOL's cross-chain protection standard (`SPEC-robinhood-sl-tp-standardization-and-protection-v1`) addresses this via:
+On **Robinhood Chain (`4663`)**, pool-draining rugs can gap down `-95%` to `-100%` in under 70 seconds if left on a legacy `-50%` fallback stop. reloadSol's cross-chain protection standard (`SPEC-robinhood-sl-tp-standardization-and-protection-v1`) addresses this via:
 
 * **Explicit Exit Profiles:** Tight DB-defined stop-loss (`-10%` to `-12%`), take-profit (`+35%` to `+50%`), and max hold (`2h` to `4h`) instead of wide fallbacks.
 * **Pre-Entry Liquidity Floor:** Requires $\ge \$5,000$ TVL and $\ge 90\%$ LP lock/burn before entry.
@@ -59,7 +59,7 @@ On **Robinhood Chain (`4663`)**, pool-draining rugs can gap down `-95%` to `-100
 
 ## 4. Expectancy & Payoff Ratio Reference
 
-When evaluating a strategy's exit profile in `/admin/strategy` or `/admin/replay`, ReloadSOL uses **median** return per trade (never raw mean, which a single `+5,000%` outlier can distort) alongside **Payoff Ratio ($R$)** and **Break-Even Win Rate**:
+When evaluating a strategy's exit profile in `/admin/strategy` or `/admin/replay`, reloadSol uses **median** return per trade (never raw mean, which a single `+5,000%` outlier can distort) alongside **Payoff Ratio ($R$)** and **Break-Even Win Rate**:
 
 $$R = \frac{\text{Average Win \%}}{|\text{Average Loss \%}|} \qquad \text{Break-Even Win Rate} = \frac{1}{1 + R}$$
 
@@ -70,15 +70,15 @@ $$R = \frac{\text{Average Win \%}}{|\text{Average Loss \%}|} \qquad \text{Break-
 | `+60%` | `-10%` | `6.00` | **14.3%** |
 
 {% hint style="tip" %}
-**Test Exit Changes Before Shipping:** Use `/admin/replay` to replay candidate stop-loss, take-profit, and trailing-stop rules against ReloadSOL's stored 1-minute `token_ohlc_bars` (net of fees) before modifying any live strategy config.
+**Test Exit Changes Before Shipping:** Use `/admin/replay` to replay candidate stop-loss, take-profit, and trailing-stop rules against reloadSol's stored 1-minute `token_ohlc_bars` (net of fees) before modifying any live strategy config.
 {% endhint %}
 
 ---
 
 ## 5. Interactive Lab: In-Flight OHLC 3-Pattern Defense
 
-Toggle **Pattern A**, **Pattern B**, and **Pattern C** below to inspect how ReloadSOL's active stop-loss line adapts bar-by-bar compared to a static stop:
+Toggle **Pattern A**, **Pattern B**, and **Pattern C** below to inspect how reloadSol's active stop-loss line adapts bar-by-bar compared to a static stop:
 
 {% embed url="https://studentofcoding.github.io/reloadsol-docs/widgets/index.html?view=ohlc" %}
-Interactive ReloadSOL OHLC 3-Pattern Defense Simulator
+Interactive reloadSol OHLC 3-Pattern Defense Simulator
 {% endembed %}

@@ -1,10 +1,10 @@
 ---
-description: How ReloadSOL manages dual-chain switching between Solana Mainnet and Robinhood Chain (EVM 4663), wallet authentication, and account modes.
+description: How reloadSol manages dual-chain switching between Solana Mainnet and Robinhood Chain (EVM 4663), wallet authentication, and account modes.
 ---
 
 # Wallets & Supported Networks
 
-ReloadSOL operates across two distinct execution environments—**Solana Mainnet (`sol`)** and **Robinhood Chain (`robinhood`, EVM Chain ID `4663`)**—while keeping balances, watchlists, trading records, and strategies strictly isolated by `(wallet, chain)`.
+reloadSol operates across two distinct execution environments—**Solana Mainnet (`sol`)** and **Robinhood Chain (`robinhood`, EVM Chain ID `4663`)**—while keeping balances, watchlists, trading records, and strategies strictly isolated by `(wallet, chain)`.
 
 ---
 
@@ -27,7 +27,7 @@ Your active chain is stored in browser `localStorage` under `reloadsol.appNetwor
 
 * **Standard Browser Wallets:** Phantom, Solflare, Backpack, and any wallet supported by `@jup-ag/wallet-adapter`.
 * **Session Authentication:** Connecting a Solana wallet establishes a signed wallet session cookie (`WALLET_SESSION_SECRET`), authorizing wallet-tier API endpoints (`/api/rpc`, `/api/jupiter/*`, `/api/trading/records`, `/api/watchlist`, `/api/operations/*`).
-* **Phantom In-App Browser Reliability:** ReloadSOL includes an explicit connect-intent self-healing hook (`useCompleteConnectIntent`) to prevent connection stalls when tapping already-installed wallets inside mobile in-app browsers.
+* **Phantom In-App Browser Reliability:** reloadSol includes an explicit connect-intent self-healing hook (`useCompleteConnectIntent`) to prevent connection stalls when tapping already-installed wallets inside mobile in-app browsers.
 
 ### Robinhood Chain (`robinhood` — EVM `4663`)
 
@@ -46,7 +46,7 @@ Robinhood Chain supports two distinct execution wallet modes, automatically dete
 
 ## Token Holdings Discovery Pipeline
 
-To keep balances fast and resilient against single-provider rate limits, ReloadSOL uses tiered holdings resolution:
+To keep balances fast and resilient against single-provider rate limits, reloadSol uses tiered holdings resolution:
 
 ### Solana Holdings (`/api/shyft/wallet/all_tokens`)
 1. **Primary:** Cached Shyft `all_tokens` (15-second fresh TTL / 120-second stale-while-revalidate; immediately bypassed with `fresh=1` right after a confirmed trade).
@@ -66,7 +66,7 @@ To keep balances fast and resilient against single-provider rate limits, ReloadS
 If a Solana trader visits `/` with a wallet that holds **sellable tokens or closable empty token accounts** but lacks **native SOL** to pay transaction fees:
 
 1. Pasting the address on `/` calls `GET /api/wallet/preview`, which returns `nativeSol`, `sellableSol`, `reclaimSol`, and `sellableCount`.
-2. When `nativeSol` is below the execution threshold while `sellableSol + reclaimSol > 0`, ReloadSOL surfaces the **Ask for Fund** flow (`POST /api/operations/ask-for-fund`).
+2. When `nativeSol` is below the execution threshold while `sellableSol + reclaimSol > 0`, reloadSol surfaces the **Ask for Fund** flow (`POST /api/operations/ask-for-fund`).
 3. **Server-Side Safeguards:**
    * Eligibility is **always re-derived server-side** from live Jupiter Portfolio data (client values are never trusted).
    * Protected by per-IP rate limiting, per-wallet cooldowns, a global daily cap, and proof-of-recoverable-value.

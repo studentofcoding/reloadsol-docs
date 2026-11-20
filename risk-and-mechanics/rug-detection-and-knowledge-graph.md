@@ -4,7 +4,7 @@ description: Multi-layer rug detection, deployer provenance ("Dev DNA"), bundler
 
 # Rug Detection, Dev Reputation & Knowledge Graph
 
-On-chain micro-cap markets experience extreme adversarial launch rates (empirical data shows >`90%` of raw bonding-curve launches fail). ReloadSOL defends both manual traders and automated strategies with a layered risk stack that combines **single-token telemetry** with **multi-hop relational graph intelligence**.
+On-chain micro-cap markets experience extreme adversarial launch rates (empirical data shows >`90%` of raw bonding-curve launches fail). reloadSol defends both manual traders and automated strategies with a layered risk stack that combines **single-token telemetry** with **multi-hop relational graph intelligence**.
 
 ---
 
@@ -22,7 +22,7 @@ On-chain micro-cap markets experience extreme adversarial launch rates (empirica
 
 ## 2. Semantic Knowledge Graph & SHACL Pre-Trade Circuit Breakers
 
-Single-token metrics have a critical blind spot: a serial rugger can deploy from a brand-new burner wallet funded two hops away by a tainted gas master. ReloadSOL's Semantic Knowledge Graph (`SPEC-knowledge-graph-edge-v1` and `SPEC-semantic-knowledge-graph-cross-token-intelligence-v1`) closes this gap across four relational dimensions:
+Single-token metrics have a critical blind spot: a serial rugger can deploy from a brand-new burner wallet funded two hops away by a tainted gas master. reloadSol's Semantic Knowledge Graph (`SPEC-knowledge-graph-edge-v1` and `SPEC-semantic-knowledge-graph-cross-token-intelligence-v1`) closes this gap across four relational dimensions:
 
 1. **Cabal Sybil Ring & Atomic Bundle Detection (`CabalConcentrationShape`):** Identifies wallets funded from a shared root or buying in the same slot; flags cluster supply concentration and bundlers (`≥ 35%` veto).
 2. **Serial Deployer "Dev DNA" Provenance (`DevReputationShape`):** Tracks each deployer's historical launches, graduation ratio ($\ge 10\%$ clean threshold), top-10 ATH tokens, and user-labeled rugs (`dev_reputation`, inspectable at `/dev/dev-reputation`).
@@ -39,7 +39,7 @@ Single-token metrics have a critical blind spot: a serial rugger can deploy from
 
 ## 3. Graph Truthfulness Guarantee
 
-ReloadSOL strictly forbids fabricating graph confidence when upstream data is missing (`SPEC-graph-edge-truthfulness-v1`, Defect Class `DC-66`):
+reloadSol strictly forbids fabricating graph confidence when upstream data is missing (`SPEC-graph-edge-truthfulness-v1`, Defect Class `DC-66`):
 
 * If holder or deployer history is unavailable for a token, the engine returns `verdict: 'unknown'` and `lineageScore: null` (`UNKNOWN_DEPLOYER`) with explicit `coverageGaps`—never falsely labeling an unseen deployer `CLEAN_DEPLOYER` or returning `pass` on an empty holder array.
 * In both `/knowledge-graph` and `/admin/graph-edge`, synthetic demo rings are only rendered when an operator explicitly selects a demo preset.

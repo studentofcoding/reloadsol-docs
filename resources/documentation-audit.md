@@ -1,16 +1,16 @@
 ---
-description: Technical audit of ReloadSOL's pre-existing repository documentation, identified gaps, information architecture redesign, and ongoing maintenance standards.
+description: Technical audit of reloadSol's pre-existing repository documentation, identified gaps, information architecture redesign, and ongoing maintenance standards.
 ---
 
 # Documentation Audit & Architecture Blueprint
 
-This page documents the structural audit performed on ReloadSOL's pre-existing `docs/` library and explains the information architecture decisions behind this GitBook.
+This page documents the structural audit performed on reloadSol's pre-existing `docs/` library and explains the information architecture decisions behind this GitBook.
 
 ---
 
 ## 1. Executive Summary of Pre-Existing Docs Audit
 
-Prior to building this GitBook, ReloadSOL possessed rich, deeply accurate engineering material—5 condensed subsystem docs (`docs/01`–`05`), **132** implementation `SPEC-*.md` files, **72** incident/analysis reports (`docs/reports/`), **13** deep research notes (`docs/research/`), and **26** HTML diagrams—but **no unified, navigable, trader-facing or developer-onboarding documentation site**.
+Prior to building this GitBook, reloadSol possessed rich, deeply accurate engineering material—5 condensed subsystem docs (`docs/01`–`05`), **132** implementation `SPEC-*.md` files, **72** incident/analysis reports (`docs/reports/`), **13** deep research notes (`docs/research/`), and **26** HTML diagrams—but **no unified, navigable, trader-facing or developer-onboarding documentation site**.
 
 ### Key Findings from the Audit
 
@@ -21,7 +21,7 @@ Prior to building this GitBook, ReloadSOL possessed rich, deeply accurate engine
 | **Missing Trader Guides** | No step-by-step guides for **Wallet Check + Ask-for-Fund**, **Bulk Buy affordability reserves**, **Robinhood Permit2 1-click setup**, **Dynamic Slippage**, or **In-Flight OHLC 3-Pattern Defense** in plain trading language. | Users misunderstood Phantom simulation behavior, Robinhood approval prompts, and fee drag on small stakes. | Authored dedicated step-by-step guides with GitBook `{% stepper %}`, `{% tabs %}`, `{% hint %}` callouts, and worked fee/payoff tables. |
 | **Spec Drift & Retired Systems** | Several older root/archive docs referenced retired systems (`Supabase`, `v2-gate` / `v2-potential` ML heads, `Raptor` as desk executor, `-50%` RH stop fallback). | Risk of onboarding engineers or traders onto deprecated workflows. | Reconciled every page against current production code (`src/config/route-network.ts`, `src/config/api-access.ts`, `docs/01`–`05`, and Nov 2026 specs) and explicitly marked retired components. |
 | **Visual Clarity** | Mermaid diagrams and sequence flows were missing from trader-facing docs (existing diagrams were standalone internal HTML files). | Execution lifecycle, BatchExecutor precedence, and 4-phase runner graduation were hard to grasp quickly. | Embedded clean, GitBook-native Mermaid flowcharts and sequence diagrams across Architecture, Execution, Risk, and Lifecycle pages. |
-| **Terminology Standardization** | Terms like `ATA`, `OOR`, `MFE/MAE`, `Payoff Ratio`, `SHACL`, `Shadow vs. Enforce`, and `Bound vs. Parent Wallet` were used without centralized definitions. | Steep learning curve for newer traders and newly onboarded devs. | Added a centralized [Trading & Platform Glossary](glossary.md) covering both FinTech/trading and ReloadSOL-specific terms. |
+| **Terminology Standardization** | Terms like `ATA`, `OOR`, `MFE/MAE`, `Payoff Ratio`, `SHACL`, `Shadow vs. Enforce`, and `Bound vs. Parent Wallet` were used without centralized definitions. | Steep learning curve for newer traders and newly onboarded devs. | Added a centralized [Trading & Platform Glossary](glossary.md) covering both FinTech/trading and reloadSol-specific terms. |
 
 ---
 

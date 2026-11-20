@@ -1,10 +1,10 @@
 ---
-description: Complete guide to ReloadSOL's multi-domain strategy engine, Algo Tester, Signals & Social bots, 4-Phase Viral Runners lifecycle, Mid-Cap Trio, and safety guards.
+description: Complete guide to reloadSol's multi-domain strategy engine, Algo Tester, Signals & Social bots, 4-Phase Viral Runners lifecycle, Mid-Cap Trio, and safety guards.
 ---
 
 # Strategy Engine, Signals & Algo Tester
 
-ReloadSOL's strategy engine unifies automated discovery, paper validation, and live execution across six trading domains—all sharing one canonical parameter spine (`src/strategies/canonical-params.ts`), one outcome ledger (`strategy_outcomes`), and one unified exit owner (`sltp_monitor`).
+reloadSol's strategy engine unifies automated discovery, paper validation, and live execution across six trading domains—all sharing one canonical parameter spine (`src/strategies/canonical-params.ts`), one outcome ledger (`strategy_outcomes`), and one unified exit owner (`sltp_monitor`).
 
 ---
 
@@ -37,7 +37,7 @@ Every strategy consists of:
 
 ## 3. The 4-Phase Viral Runners Lifecycle (`/admin/lifecycle`)
 
-Rather than chasing every raw launch in the bonding-curve graveyard, ReloadSOL's lifecycle engine graduates survivors through four structured phases (`SPEC-viral-runners-lifecycle-regime-defense-v1`):
+Rather than chasing every raw launch in the bonding-curve graveyard, reloadSol's lifecycle engine graduates survivors through four structured phases (`SPEC-viral-runners-lifecycle-regime-defense-v1`):
 
 ```mermaid
 flowchart LR
@@ -92,5 +92,5 @@ Additionally, `strategy_search` runs every `6h` (`POST /api/strategies/search-cy
 Switch between **`MOMENTUM_RUNNER`**, **`NORMAL_CHOP`**, and **`DEFENSIVE`** regimes and adjust bundler concentration (`bundlers_hold_pct`) and climate state to see how the 4-phase funnel responds in real time:
 
 {% embed url="https://studentofcoding.github.io/reloadsol-docs/widgets/index.html?view=lifecycle" %}
-Interactive ReloadSOL 4-Phase Viral Runners & Macro Regime Simulator
+Interactive reloadSol 4-Phase Viral Runners & Macro Regime Simulator
 {% endembed %}

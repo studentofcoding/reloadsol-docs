@@ -4,7 +4,7 @@ description: Production Docker Compose topology, Next.js + Go + Postgres/PgBounc
 
 # System Architecture & Data Layer
 
-ReloadSOL runs as a self-contained **Docker Compose stack** on a single production VPS (`flowey-vps`) behind Cloudflare Full (Strict) TLS and an Nginx edge proxy. All application, strategy, and telemetry data lives in Docker Postgres (`reloadsol_db`).
+reloadSol runs as a self-contained **Docker Compose stack** on a single production VPS (`flowey-vps`) behind Cloudflare Full (Strict) TLS and an Nginx edge proxy. All application, strategy, and telemetry data lives in Docker Postgres (`reloadsol_db`).
 
 ---
 

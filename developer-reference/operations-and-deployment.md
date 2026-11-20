@@ -4,7 +4,7 @@ description: Production deployment workflow, standalone build shipping, migratio
 
 # Operations, Deployment & Troubleshooting
 
-ReloadSOL enforces strict operational guardrails (`docs/ops/CHANGE-RULES.md`) because production runs on a constrained `< 4 GiB RAM` VPS (`flowey-vps`) serving live wallets and automated trading loops.
+reloadSol enforces strict operational guardrails (`docs/ops/CHANGE-RULES.md`) because production runs on a constrained `< 4 GiB RAM` VPS (`flowey-vps`) serving live wallets and automated trading loops.
 
 ---
 

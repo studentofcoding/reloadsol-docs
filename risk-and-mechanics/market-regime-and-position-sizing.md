@@ -1,10 +1,10 @@
 ---
-description: How ReloadSOL adapts strategy timing, volatility gates, and position sizing to macro crypto regimes, brain climate states, and probabilistic ML sizing.
+description: How reloadSol adapts strategy timing, volatility gates, and position sizing to macro crypto regimes, brain climate states, and probabilistic ML sizing.
 ---
 
 # Macro Market Regime & Position Sizing
 
-A momentum strategy that thrives during a high-volume Solana bull sprint will bleed out during a choppy or risk-off drawdown if it trades with fixed parameters and full size. ReloadSOL conditions **entry timing**, **consolidation tightness**, **stop-loss clamps**, and **position sizing** on live macro market conditions.
+A momentum strategy that thrives during a high-volume Solana bull sprint will bleed out during a choppy or risk-off drawdown if it trades with fixed parameters and full size. reloadSol conditions **entry timing**, **consolidation tightness**, **stop-loss clamps**, and **position sizing** on live macro market conditions.
 
 ---
 
@@ -26,7 +26,7 @@ Every closed `strategy_outcomes` row preserves **two** distinct regime timestamp
 
 ## 2. Climate Gate & Stake Scaling (`/api/regime/climate`)
 
-ReloadSOL's Market Brain publishes a real-time climate state consumed by the header indicator, `/dev/insight`, and automated paper/live sizing:
+reloadSol's Market Brain publishes a real-time climate state consumed by the header indicator, `/dev/insight`, and automated paper/live sizing:
 
 | Climate State | `sizeScale` Multiplier | Trading Posture |
 | :--- | :--- | :--- |
@@ -45,14 +45,14 @@ ReloadSOL's Market Brain publishes a real-time climate state consumed by the hea
 ## 3. Position Sizing & Capital Caps
 
 ### Soft ML Sizing (`ml-soft-size.ts`)
-For `mcap_tracker`, `signals`, and `gmgn` lanes, ReloadSOL applies **soft sizing** rather than hard binary blocking while classifiers remain in shadow calibration:
+For `mcap_tracker`, `signals`, and `gmgn` lanes, reloadSol applies **soft sizing** rather than hard binary blocking while classifiers remain in shadow calibration:
 
 $$\text{Effective Size} = \text{Base Stake} \times \text{Climate Scale} \times \max\Big(\text{SOL\_ML\_SIZE\_FLOOR},\ (1 - p_{\text{bad}}) \times \text{confidence}\Big)$$
 
 * Default `SOL_ML_SIZE_FLOOR = 0.25` (scales size down on weak setups without dropping the trade from shadow telemetry).
 
 ### Portfolio & Live Capital Safeguards
-Before any automated live order is signed via server keypair, ReloadSOL enforces:
+Before any automated live order is signed via server keypair, reloadSol enforces:
 
 1. **`MAX_SOL_AT_RISK`:** Caps total simultaneous live SOL deployed across all open positions (evaluated against `peakConcurrentPositions` in `/dev/paper-trade` before arming a strategy).
 2. **`MIN_SOL_BALANCE`:** Preserves a native SOL buffer for gas and emergency exits.

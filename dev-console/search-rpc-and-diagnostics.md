@@ -4,7 +4,7 @@ description: Cross-chain token search, TokenLocateHub Freeview maps, RPC endpoin
 
 # Token Search, RPC Diagnostics & System Health
 
-This section covers ReloadSOL's operator research and infrastructure diagnostic surfaces.
+This section covers reloadSol's operator research and infrastructure diagnostic surfaces.
 
 ---
 
@@ -24,7 +24,7 @@ This section covers ReloadSOL's operator research and infrastructure diagnostic 
 **Route:** `/dev/rpc-tester` (Solana-only)  
 **APIs:** `GET /api/rpc/health`, `GET /api/rpc/diagnostics`, `GET /api/rpc/diagnostics?send=1`
 
-ReloadSOL routes all Solana RPC traffic through a same-origin proxy (`/api/rpc`) with ranked failover and strict role separation (`SPEC-rpc-endpoint-standardization-v1`):
+reloadSol routes all Solana RPC traffic through a same-origin proxy (`/api/rpc`) with ranked failover and strict role separation (`SPEC-rpc-endpoint-standardization-v1`):
 
 | Rank | Provider Role | Capabilities & Health Label |
 | :--- | :--- | :--- |

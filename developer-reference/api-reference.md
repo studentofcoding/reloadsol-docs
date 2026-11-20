@@ -1,10 +1,10 @@
 ---
-description: Complete catalog of ReloadSOL's REST and SSE API routes, authentication tiers, rate limits, and service-to-service headers.
+description: Complete catalog of reloadSol's REST and SSE API routes, authentication tiers, rate limits, and service-to-service headers.
 ---
 
 # REST & SSE API Reference
 
-ReloadSOL exposes 200+ Next.js App Router endpoints under `/api/*`, governed by a fail-closed, four-tier access control model (`src/config/api-access.ts`, `src/utils/api-auth.ts`). Any unclassified `/api/*` route defaults to **`wallet`** tier.
+reloadSol exposes 200+ Next.js App Router endpoints under `/api/*`, governed by a fail-closed, four-tier access control model (`src/config/api-access.ts`, `src/utils/api-auth.ts`). Any unclassified `/api/*` route defaults to **`wallet`** tier.
 
 {% hint style="tip" %}
 **Interactive OpenAPI Playground:** This repository ships an OpenAPI 3.1 specification at [`openapi.yaml`](../openapi.yaml). Connect it in GitBook (**Integrations → OpenAPI**) to test public endpoints (`/api/health`, `/api/solprice`, `/api/wallet/preview`, `/api/regime/climate`, `/api/rpc/diagnostics`) live from the docs.

@@ -13,9 +13,9 @@ Bulk Buy lets you deploy capital across multiple tokens simultaneously from a si
 ## Key Capabilities
 
 * **Multi-Token Batch Cap:** Buy up to **4 tokens per batch** on Solana (`MAX_TRADE_TOKENS_SOL = 4`) and **4 tokens per batch** on Robinhood Chain (`MAX_TRADE_TOKENS_RH = 4`, bounded by the `BatchExecutor` UX) — see `src/utils/trade-ui-limits.ts`. Each token needs at least **`$0.50`** of the total spend (`MIN_BUY_USD_PER_TOKEN`), and the slider floor is derived from that so a 1 % step can never fall under it.
-* **Flexible Input Parsing:** Paste one or multiple contract addresses (CAs) separated by spaces, commas, or newlines. ReloadSOL parses and validates each address into interactive token chips with live logos, symbols, and prices.
+* **Flexible Input Parsing:** Paste one or multiple contract addresses (CAs) separated by spaces, commas, or newlines. reloadSol parses and validates each address into interactive token chips with live logos, symbols, and prices.
 * **One-Click Append from Discovery:** Tokens from trending boards, signal toasts, or search can be appended directly into your active buy basket.
-* **Built-In Risk Analysis (`RiskAnalysis.tsx`):** Before you execute, ReloadSOL surfaces token risk indicators (holder concentration, liquidity depth, rug signals, and metadata anomalies) inline for each token in the basket.
+* **Built-In Risk Analysis (`RiskAnalysis.tsx`):** Before you execute, reloadSol surfaces token risk indicators (holder concentration, liquidity depth, rug signals, and metadata anomalies) inline for each token in the basket.
 * **Supported Spend Assets:**
   * **Solana:** `SOL`
   * **Robinhood Chain:** `ETH`, `WETH`, or `USDG`
@@ -27,10 +27,10 @@ Bulk Buy lets you deploy capital across multiple tokens simultaneously from a si
 To deliver fast execution without exhausting RPC or Jupiter rate limits, Bulk Buy uses two coordinated safeguards:
 
 1. **Warm-on-Intent Quoting (`useWarmOnIntent`):**
-   * Rather than hammering the execution quote API on every keystroke, ReloadSOL shows fast display estimates via the shared quote engine (`purpose: 'estimate'`) and only warms execution quotes after `1.5 seconds` of input idle or when your cursor/focus reaches the **Buy** button.
+   * Rather than hammering the execution quote API on every keystroke, reloadSol shows fast display estimates via the shared quote engine (`purpose: 'estimate'`) and only warms execution quotes after `1.5 seconds` of input idle or when your cursor/focus reaches the **Buy** button.
    * Clicking **Buy** always builds fresh `purpose: 'execute'` quotes—stale display estimates are never signed.
 2. **Pre-Quote Affordability Gate (`warmAffordability` & `requiredBuySol`):**
-   * On Solana, ReloadSOL checks your native SOL balance before warming or signing to ensure you can cover:
+   * On Solana, reloadSol checks your native SOL balance before warming or signing to ensure you can cover:
      $$\text{Required SOL} = \text{Total Swap Spend} + \text{Priority Fees} + (N_{\text{new ATAs}} \times 0.00203928\text{ SOL}) + \text{Base Tx Fees}$$
    * Empty or underfunded wallets are caught cleanly with clear user messaging (`describeBuyFailure`) instead of triggering cryptic `422 Insufficient funds` aggregator errors.
 
@@ -40,7 +40,7 @@ To deliver fast execution without exhausting RPC or Jupiter rate limits, Bulk Bu
 
 {% tabs %}
 {% tab title="Solana Mainnet" %}
-1. ReloadSOL requests fresh Jupiter Swap V2 `/order` transactions for each token leg in the basket (falling back to Jupiter Lite only if V2 fails).
+1. reloadSol requests fresh Jupiter Swap V2 `/order` transactions for each token leg in the basket (falling back to Jupiter Lite only if V2 fails).
 2. Routes exceeding `SWAP_QUOTE_MAX_IMPACT_PCT` (default `15%`) are rejected to protect you from illiquid traps.
 3. All prepared v0 transactions pass `simulateExact` with their live blockhash.
 4. Your wallet prompts once via `signAllTransactions`.

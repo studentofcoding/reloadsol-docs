@@ -1,14 +1,14 @@
 ---
-description: Exact ReloadSOL design tokens, dark-mode palette, logo assets, and GitBook Site Customization settings so docs match the ReloadSOL trading terminal.
+description: Exact reloadSol design tokens, dark-mode palette, logo assets, and GitBook Site Customization settings so docs match the reloadSol trading terminal.
 ---
 
 # Brand & GitBook Customization Guide
 
-Use these exact design tokens (extracted from `src/app/globals.css`) in **GitBook → Site Settings → Customize** so `docs.reloadsol.app` matches the ReloadSOL trading app.
+Use these exact design tokens (extracted from `src/app/globals.css`) in **GitBook → Site Settings → Customize** so `docs.reloadsol.app` matches the reloadSol trading app.
 
 ---
 
-## 1. ReloadSOL Color Palette
+## 1. reloadSol Color Palette
 
 | Token | Hex / Value | Usage in GitBook |
 | :--- | :--- | :--- |

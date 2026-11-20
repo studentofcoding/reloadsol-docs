@@ -4,7 +4,7 @@ description: Technical reference for BatchExecutor.sol and Permit2 on Robinhood 
 
 # Smart Contracts & Background Workers
 
-ReloadSOL pairs on-chain smart contract batching on Robinhood Chain with a two-tier background scheduling architecture (`reloadsol-cron` in Go + repo-managed VPS host crons).
+reloadSol pairs on-chain smart contract batching on Robinhood Chain with a two-tier background scheduling architecture (`reloadsol-cron` in Go + repo-managed VPS host crons).
 
 ---
 

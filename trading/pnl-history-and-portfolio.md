@@ -6,7 +6,7 @@ description: Monitor open positions, calculate realized and unrealized P&L, exec
 
 **Routes:** `/pnl` and `/history`
 
-ReloadSOL maintains a receipt-verified ledger of every manual and simulated trade, strictly scoped by **`wallet:chain`** so your Solana (`SOL`) and Robinhood Chain (`ETH`) performance never mix.
+reloadSol maintains a receipt-verified ledger of every manual and simulated trade, strictly scoped by **`wallet:chain`** so your Solana (`SOL`) and Robinhood Chain (`ETH`) performance never mix.
 
 ---
 

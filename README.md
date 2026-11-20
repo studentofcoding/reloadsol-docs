@@ -1,14 +1,14 @@
 ---
-description: Complete user and developer documentation for ReloadSOL — a dual-chain batch trading, dust recovery, and algorithmic execution platform for Solana and Robinhood Chain.
+description: Complete user and developer documentation for reloadSol — a dual-chain batch trading, dust recovery, and algorithmic execution platform for Solana and Robinhood Chain.
 ---
 
-# Welcome to ReloadSOL
+# Welcome to reloadSol
 
-**ReloadSOL** is a dual-chain trading and algorithmic execution platform built for **Solana Mainnet** and **Robinhood Chain (EVM Chain ID `4663`)**.
+**reloadSol** is a dual-chain trading and algorithmic execution platform built for **Solana Mainnet** and **Robinhood Chain (EVM Chain ID `4663`)**.
 
-For everyday traders, ReloadSOL turns fragmented wallet dust and multi-token portfolios back into native **SOL** or **ETH** in 1–2 clicks—reclaiming locked Solana token account rent along the way—while also providing multi-token bulk buys, single-pair swaps, real-time charts, cross-chain watchlists, and receipt-verified P&L tracking.
+For everyday traders, reloadSol turns fragmented wallet dust and multi-token portfolios back into native **SOL** or **ETH** in 1–2 clicks—reclaiming locked Solana token account rent along the way—while also providing multi-token bulk buys, single-pair swaps, real-time charts, cross-chain watchlists, and receipt-verified P&L tracking.
 
-For quantitative operators and developers, ReloadSOL ships a full institutional-grade automation stack under `/dev/*` and `/admin/*`: multi-domain paper and live strategy engines, Meteora DLMM and Robinhood CLMM liquidity managers, a Semantic Knowledge Graph anti-cabal filter, In-Flight OHLC 3-Pattern exit protection, and an ONNX-served LightGBM machine learning pipeline.
+For quantitative operators and developers, reloadSol ships a full institutional-grade automation stack under `/dev/*` and `/admin/*`: multi-domain paper and live strategy engines, Meteora DLMM and Robinhood CLMM liquidity managers, a Semantic Knowledge Graph anti-cabal filter, In-Flight OHLC 3-Pattern exit protection, and an ONNX-served LightGBM machine learning pipeline.
 
 ---
 
@@ -62,14 +62,14 @@ flowchart LR
 | **Automated Strategies** | Paper (`sim_only`), Live (`live_only`), and A/B (`ab_parallel`) | Paper (`sim_only`) + alert-only CLMM monitoring |
 
 {% hint style="info" %}
-**Non-Custodial by Design (Public Surfaces):** On all public trading pages (`/sell`, `/buy`, `/swap`), ReloadSOL never holds your private keys. Every swap, burn, and account close is simulated against live RPC state before being presented to your browser wallet (Phantom, Rabby, or any EIP-6963 / Solana Wallet Adapter wallet) for explicit signature approval.
+**Non-Custodial by Design (Public Surfaces):** On all public trading pages (`/sell`, `/buy`, `/swap`), reloadSol never holds your private keys. Every swap, burn, and account close is simulated against live RPC state before being presented to your browser wallet (Phantom, Rabby, or any EIP-6963 / Solana Wallet Adapter wallet) for explicit signature approval.
 {% endhint %}
 
 ---
 
 ## Core Design Principles
 
-1. **Receipt-Gated Settlement Honesty:** A trade is never marked `confirmed` when a transaction is merely submitted. ReloadSOL tracks `pending` → `confirmed` or `failed` strictly from verified on-chain receipts.
-2. **Exact-Bytes Pre-Sign Simulation:** Before your wallet opens a signature prompt, ReloadSOL simulates the exact serialized transaction bytes with a live blockhash (no `replaceRecentBlockhash` shortcuts and no `skipPreflight: true` bypasses).
-3. **One Live Price Source:** ReloadSOL forbids hardcoded native asset fallback prices. If live price feeds are unreachable, surfaces explicitly display unavailable state (`—`) rather than fabricating P&L or USD estimates.
+1. **Receipt-Gated Settlement Honesty:** A trade is never marked `confirmed` when a transaction is merely submitted. reloadSol tracks `pending` → `confirmed` or `failed` strictly from verified on-chain receipts.
+2. **Exact-Bytes Pre-Sign Simulation:** Before your wallet opens a signature prompt, reloadSol simulates the exact serialized transaction bytes with a live blockhash (no `replaceRecentBlockhash` shortcuts and no `skipPreflight: true` bypasses).
+3. **One Live Price Source:** reloadSol forbids hardcoded native asset fallback prices. If live price feeds are unreachable, surfaces explicitly display unavailable state (`—`) rather than fabricating P&L or USD estimates.
 4. **Shadow-First Quant Discipline:** Every new risk gate, knowledge graph veto, and machine learning classifier runs in `shadow` mode first—recording counterfactual outcomes against live 1-minute OHLC bars before enforcement is ever enabled.

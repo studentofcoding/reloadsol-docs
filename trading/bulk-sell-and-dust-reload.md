@@ -6,7 +6,7 @@ description: Liquidate multiple tokens, sweep wallet dust into SOL/ETH or any cu
 
 **Routes:** `/sell`, `/sell/solana`, `/sell/robinhood` (and default post-connect destination from `/`)
 
-Bulk Sell—also referred to as **Reload**—is ReloadSOL's flagship public surface. Instead of swapping tokens one by one and manually closing leftover token accounts, you can liquidate an entire portfolio slice and reclaim locked rent in one coordinated flow.
+Bulk Sell—also referred to as **Reload**—is reloadSol's flagship public surface. Instead of swapping tokens one by one and manually closing leftover token accounts, you can liquidate an entire portfolio slice and reclaim locked rent in one coordinated flow.
 
 ---
 
@@ -45,9 +45,9 @@ When `/sell` loads your holdings, every token account is classified into one of 
 
 Every SPL or Token-2022 token you have ever held on Solana requires an **Associated Token Account (ATA)**, which locks `2,039,280 lamports` (`~0.00203928 SOL`) as rent-exempt reserve.
 
-* **Normal 100% Sell:** When you sell 100% of a token, its ATA becomes empty (`balance = 0`), allowing ReloadSOL to close the account and return the rent to your wallet.
-* **Burn & Close (Illiquid / Rugged Tokens):** For tokens with zero liquidity, ReloadSOL packs a `burn` + `closeAccount` instruction pair into a measured chunk (Token-2022 burn+close requires ~`5,669 CU`).
-* **Split-on-Revert Protection:** Before opening your wallet prompt, `simulateExact` tests every packed close chunk. If one account in a chunk reverts (e.g., a token with transfer hooks or frozen state), ReloadSOL isolates and removes the failing account *before* signing so the remaining accounts close cleanly in one approval.
+* **Normal 100% Sell:** When you sell 100% of a token, its ATA becomes empty (`balance = 0`), allowing reloadSol to close the account and return the rent to your wallet.
+* **Burn & Close (Illiquid / Rugged Tokens):** For tokens with zero liquidity, reloadSol packs a `burn` + `closeAccount` instruction pair into a measured chunk (Token-2022 burn+close requires ~`5,669 CU`).
+* **Split-on-Revert Protection:** Before opening your wallet prompt, `simulateExact` tests every packed close chunk. If one account in a chunk reverts (e.g., a token with transfer hooks or frozen state), reloadSol isolates and removes the failing account *before* signing so the remaining accounts close cleanly in one approval.
 
 {% hint style="warning" %}
 **Irreversible Action:** Burning an unsellable token permanently destroys the token balance in order to reclaim the `~0.00204 SOL` ATA rent. Only burn tokens you have verified are worthless or rugged.

@@ -1,29 +1,29 @@
 ---
-description: How ReloadSOL protects traders before signing transactions and how paper trading models real-world execution costs.
+description: How reloadSol protects traders before signing transactions and how paper trading models real-world execution costs.
 ---
 
 # Paper Trading & Transaction Safety
 
-Trading on-chain carries irreversible execution risk. ReloadSOL implements strict pre-signature verification for live trades and an empirically calibrated cost model for paper (simulated) trading so that test performance reflects real-world execution.
+Trading on-chain carries irreversible execution risk. reloadSol implements strict pre-signature verification for live trades and an empirically calibrated cost model for paper (simulated) trading so that test performance reflects real-world execution.
 
 ---
 
 ## Pre-Signature Transaction Safety (Solana)
 
-ReloadSOL enforces five non-negotiable invariants on every Solana transaction handed to your wallet (codified in `SPEC-phantom-simulation-hardening-v1`):
+reloadSol enforces five non-negotiable invariants on every Solana transaction handed to your wallet (codified in `SPEC-phantom-simulation-hardening-v1`):
 
 1. **Exact-Bytes Simulation (`simulateExact`):** Every swap leg, close-account chunk, rent reclaim, and fee transfer is simulated using the **exact serialized bytes** and the **real recent blockhash** (`sigVerify: false`, never `replaceRecentBlockhash: true`). What our pre-flight check simulates is byte-for-byte what Phantom or Solflare simulates.
-2. **Stale Blockhash Auto-Rebuild:** If a simulation fails due to a stale blockhash, ReloadSOL rebuilds the transaction once automatically—it never hands a stale transaction to your wallet.
+2. **Stale Blockhash Auto-Rebuild:** If a simulation fails due to a stale blockhash, reloadSol rebuilds the transaction once automatically—it never hands a stale transaction to your wallet.
 3. **Zero `skipPreflight: true` Bypasses:** Every RPC broadcast runs with preflight simulation enabled.
-4. **Split-on-Revert Before Signing:** When closing multiple dust or zero-balance accounts, if a packed chunk fails simulation, ReloadSOL splits and isolates the reverting account *before* calling `signAllTransactions`, preserving a single clean wallet approval for all healthy accounts.
-5. **Message-Equality Guard:** After wallet signing, ReloadSOL verifies whether the wallet modified the transaction message (for example, refreshing the blockhash) before deciding whether to route through Jupiter's managed `/execute` endpoint or direct RPC broadcast.
+4. **Split-on-Revert Before Signing:** When closing multiple dust or zero-balance accounts, if a packed chunk fails simulation, reloadSol splits and isolates the reverting account *before* calling `signAllTransactions`, preserving a single clean wallet approval for all healthy accounts.
+5. **Message-Equality Guard:** After wallet signing, reloadSol verifies whether the wallet modified the transaction message (for example, refreshing the blockhash) before deciding whether to route through Jupiter's managed `/execute` endpoint or direct RPC broadcast.
 
 ### Balance Reserve Protection (Bulk Buy)
 
-Before preparing a Solana bulk buy, ReloadSOL checks `requiredBuySol`, reserving not only your swap spend and priority fees, but also **ATA rent (`2,039,280 lamports` ≈ `0.00204 SOL` per new token account)** and **base transaction fees** (`5,000 lamports` per signature). This prevents partial batch failures mid-execution caused by running out of SOL for account creation.
+Before preparing a Solana bulk buy, reloadSol checks `requiredBuySol`, reserving not only your swap spend and priority fees, but also **ATA rent (`2,039,280 lamports` ≈ `0.00204 SOL` per new token account)** and **base transaction fees** (`5,000 lamports` per signature). This prevents partial batch failures mid-execution caused by running out of SOL for account creation.
 
 {% hint style="success" %}
-**Fail-Open Platform Fee Protection:** If a platform fee instruction fails simulation or cannot be built, ReloadSOL drops the fee leg and proceeds with your trade rather than blocking or reverting your swap.
+**Fail-Open Platform Fee Protection:** If a platform fee instruction fails simulation or cannot be built, reloadSol drops the fee leg and proceeds with your trade rather than blocking or reverting your swap.
 {% endhint %}
 
 ---
@@ -38,9 +38,9 @@ Before preparing a Solana bulk buy, ReloadSOL checks `requiredBuySol`, reserving
 
 ## Realistic Paper Trading & Execution Cost Model
 
-ReloadSOL supports paper trading (`is_simulation: true`) both for manual experimentation and for automated strategy validation (`/dev/paper-trade`, `/dev/algo-tester`).
+reloadSol supports paper trading (`is_simulation: true`) both for manual experimentation and for automated strategy validation (`/dev/paper-trade`, `/dev/algo-tester`).
 
-Unlike naive simulators that assume zero-friction mid-price fills, ReloadSOL applies a calibrated execution cost model (`src/strategies/execution-model.ts` and `src/strategies/paper-fee.ts`):
+Unlike naive simulators that assume zero-friction mid-price fills, reloadSol applies a calibrated execution cost model (`src/strategies/execution-model.ts` and `src/strategies/paper-fee.ts`):
 
 | Cost Component | Default Value | Empirical Basis |
 | :--- | :--- | :--- |
@@ -73,5 +73,5 @@ $$\text{Fee Drag (\%)} = \frac{\text{Round-Trip Fixed Fee (SOL)}}{\text{Position
 Adjust **Position Stake (SOL)**, **Average Win %**, and **Average Loss %** to see how flat network/paper fees (`0.0003 SOL`) affect your net payoff ratio ($R$) and break-even win rate:
 
 {% embed url="https://studentofcoding.github.io/reloadsol-docs/widgets/index.html?view=calculator" %}
-Interactive ReloadSOL Fee-Drag & Payoff-Ratio Calculator
+Interactive reloadSol Fee-Drag & Payoff-Ratio Calculator
 {% endembed %}

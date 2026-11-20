@@ -4,7 +4,7 @@ description: Analyze tokens with live OHLC charts, manage cross-chain watchlists
 
 # Charts, Watchlist & Market Discovery
 
-ReloadSOL pairs its execution tools with real-time charting, cross-chain watchlists, and visual market intelligence so you can research and act without switching tabs.
+reloadSol pairs its execution tools with real-time charting, cross-chain watchlists, and visual market intelligence so you can research and act without switching tabs.
 
 ---
 
@@ -12,7 +12,7 @@ ReloadSOL pairs its execution tools with real-time charting, cross-chain watchli
 
 Opening `/chart/<mintOrContract>` gives you a unified trading view for both **Solana SPL/Token-2022 mints** and **Robinhood Chain 42-character EVM (`0x...`) contracts**:
 
-* **Live Candlestick Charting:** Powered by `lightweight-charts` and embedded GMGN charts, backed by ReloadSOL's own 1-minute `token_ohlc_bars` sampler when upstream chart feeds miss.
+* **Live Candlestick Charting:** Powered by `lightweight-charts` and embedded GMGN charts, backed by reloadSol's own 1-minute `token_ohlc_bars` sampler when upstream chart feeds miss.
 * **Live Metadata & Decimals:** Resolves live USD price, market cap, liquidity, and exact token decimals (`fetchRhChartTokenInfo` on Robinhood; Jupiter/GMGN metadata on Solana).
 * **"Your Position" Card:** Automatically displays your live balance, average entry, and unrealized P&L for the token on **both** Solana and Robinhood Chain.
 * **Chart Buy Modal (`ChartBuyModal.tsx`):** Keyboard-navigable quick-buy overlay available directly from chart, signal, and trend boards so you can enter a position without leaving the chart.
@@ -32,7 +32,7 @@ Track tokens across both Solana and Robinhood Chain in one persistent watchlist 
 
 ## Public Knowledge Graph Explorer (`/knowledge-graph` & `/analytics/knowledge-graph`)
 
-ReloadSOL exposes an interactive **Ontodia-style Visual Knowledge Graph** that lets traders inspect hidden on-chain relationships before entering a trade:
+reloadSol exposes an interactive **Ontodia-style Visual Knowledge Graph** that lets traders inspect hidden on-chain relationships before entering a trade:
 
 * **Deployer Provenance ("Dev DNA"):** See whether a token's creator has a history of successful graduations or serial rug pulls.
 * **Holder & Cabal Topology:** Visualize clusters of wallets funded by the same source or buying in the same atomic slot (bundler rings).
