@@ -70,8 +70,3 @@ $$\text{Fee Drag (\%)} = \frac{\text{Round-Trip Fixed Fee (SOL)}}{\text{Position
 
 ## Interactive Fee-Drag & Payoff-Ratio Calculator
 
-Adjust **Position Stake (SOL)**, **Average Win %**, and **Average Loss %** to see how flat network/paper fees (`0.0003 SOL`) affect your net payoff ratio ($R$) and break-even win rate:
-
-{% embed url="https://studentofcoding.github.io/reloadsol-docs/widgets/index.html?view=calculator" %}
-Interactive reloadSol Fee-Drag & Payoff-Ratio Calculator
-{% endembed %}

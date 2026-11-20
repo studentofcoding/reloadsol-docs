@@ -77,8 +77,3 @@ $$R = \frac{\text{Average Win \%}}{|\text{Average Loss \%}|} \qquad \text{Break-
 
 ## 5. Interactive Lab: In-Flight OHLC 3-Pattern Defense
 
-Toggle **Pattern A**, **Pattern B**, and **Pattern C** below to inspect how reloadSol's active stop-loss line adapts bar-by-bar compared to a static stop:
-
-{% embed url="https://studentofcoding.github.io/reloadsol-docs/widgets/index.html?view=ohlc" %}
-Interactive reloadSol OHLC 3-Pattern Defense Simulator
-{% endembed %}

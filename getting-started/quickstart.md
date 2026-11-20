@@ -83,4 +83,4 @@ reloadSol scans your wallet and automatically groups every token into actionable
 | **Track realized & unrealized P&L** | `/pnl` | Supports Real/Sim filters and inline Fast Sell |
 | **Audit transaction history** | `/history` | Per-wallet, per-chain settlement log with explorer links |
 | **Explore token relationships** | `/knowledge-graph` | Visual deployer, holder, and cabal topology |
-| **Open Developer & Quant Tools** | `/dev` and `/admin` | Dev-wallet gated; see [Dev Console Overview](../dev-console/overview-and-access.md) |
+| **Open Developer & Quant Tools** | `/dev` and `/admin` | Dev-wallet gated; operator documentation is internal and not published here |
