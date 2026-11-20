@@ -72,3 +72,13 @@ $$R = \frac{\text{Average Win \%}}{|\text{Average Loss \%}|} \qquad \text{Break-
 {% hint style="tip" %}
 **Test Exit Changes Before Shipping:** Use `/admin/replay` to replay candidate stop-loss, take-profit, and trailing-stop rules against ReloadSOL's stored 1-minute `token_ohlc_bars` (net of fees) before modifying any live strategy config.
 {% endhint %}
+
+---
+
+## 5. Interactive Lab: In-Flight OHLC 3-Pattern Defense
+
+Toggle **Pattern A**, **Pattern B**, and **Pattern C** below to inspect how ReloadSOL's active stop-loss line adapts bar-by-bar compared to a static stop:
+
+{% embed url="https://studentofcoding.github.io/reloadsol-docs/widgets/index.html?view=ohlc" %}
+Interactive ReloadSOL OHLC 3-Pattern Defense Simulator
+{% endembed %}

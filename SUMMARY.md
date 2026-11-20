@@ -41,4 +41,5 @@
 ## Resources
 
 * [Trading & Platform Glossary](resources/glossary.md)
+* [Brand & GitBook Customization Guide](resources/brand-and-customization.md)
 * [Documentation Audit & Architecture Blueprint](resources/documentation-audit.md)

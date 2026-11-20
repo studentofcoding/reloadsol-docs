@@ -84,3 +84,13 @@ To prevent strategies from repeatedly re-buying a dying token on the way down, e
 | **DLMM Reopen Cooldown** | `60 min` per pool · `1,440 min` (24h) per token |
 
 Additionally, `strategy_search` runs every `6h` (`POST /api/strategies/search-cycle`) performing walk-forward grid evaluation over closed outcomes—pruning underperforming `search_*` clones (cap 3) and promoting verified winners onto canonical **sim** configurations.
+
+---
+
+## 6. Interactive Lab: Viral Runners Lifecycle & Macro Regime
+
+Switch between **`MOMENTUM_RUNNER`**, **`NORMAL_CHOP`**, and **`DEFENSIVE`** regimes and adjust bundler concentration (`bundlers_hold_pct`) and climate state to see how the 4-phase funnel responds in real time:
+
+{% embed url="https://studentofcoding.github.io/reloadsol-docs/widgets/index.html?view=lifecycle" %}
+Interactive ReloadSOL 4-Phase Viral Runners & Macro Regime Simulator
+{% endembed %}

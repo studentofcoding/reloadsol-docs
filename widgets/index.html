@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReloadSOL — Interactive Trading & Strategy Lab</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #000000;
+      --surface: #111113;
+      --surface-2: #1a1a1e;
+      --border: #2a2a2e;
+      --accent: #a3e635;
+      --accent-strong: #84cc16;
+      --accent-soft: rgba(163, 230, 53, 0.12);
+      --positive: #4ade80;
+      --negative: #f87171;
+      --warning: #fbbf24;
+      --text: #ffffff;
+      --text-dim: #8a8f8a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #000000 0%, #111113 100%);
+      color: var(--text);
+      padding: 16px;
+      min-height: 100vh;
+    }
+    .shell {
+      max-width: 920px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+    }
+    .dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+    .tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tab {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .tab:hover { color: var(--text); border-color: #444; }
+    .tab.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .panel { display: none; padding: 18px; }
+    .panel.active { display: block; }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+      align-items: center;
+    }
+    .pill {
+      background: var(--surface-2);
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .pill.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .stat {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .stat .label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.04em; }
+    .stat .val { font-size: 18px; font-weight: 700; margin-top: 4px; }
+    .pos { color: var(--positive); }
+    .neg { color: var(--negative); }
+    .warn { color: var(--warning); }
+    .acc { color: var(--accent); }
+    .chart-wrap {
+      background: #0a0a0c;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      height: 290px;
+      position: relative;
+    }
+    .note {
+      margin-top: 12px;
+      font-size: 12.5px;
+      color: #cbd5cb;
+      line-height: 1.5;
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 6px;
+    }
+    .slider-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .slider-box {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .slider-box label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+    .slider-box label strong { color: var(--accent); }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+    .phases {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .phase {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .phase.blocked { border-color: var(--negative); opacity: 0.55; }
+    .phase.ok { border-color: var(--accent); }
+    .phase h4 { font-size: 13px; margin-bottom: 6px; }
+    .phase p { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <div class="brand"><span class="dot"></span> ReloadSOL Interactive Lab</div>
+      <div class="tabs">
+        <button class="tab active" data-tab="ohlc">OHLC 3-Pattern Defense</button>
+        <button class="tab" data-tab="lifecycle">Viral Runners &amp; Regime</button>
+        <button class="tab" data-tab="calculator">Fee-Drag &amp; Payoff Calc</button>
+      </div>
+    </div>
+
+    <!-- TAB 1: OHLC 3-PATTERN DEFENSE -->
+    <div id="panel-ohlc" class="panel active">
+      <div class="controls">
+        <button class="pill active" data-pattern="C">Pattern C: Dynamic Ratchet &amp; 2-Bar Trail</button>
+        <button class="pill" data-pattern="A">Pattern A: 3-Bar Breakdown Cut</button>
+        <button class="pill" data-pattern="B">Pattern B: Asymmetric Warn Clamp</button>
+      </div>
+      <div class="chart-wrap"><canvas id="ohlcChart"></canvas></div>
+      <div class="grid" id="ohlcStats"></div>
+      <div class="note" id="ohlcNote"></div>
+    </div>
+
+    <!-- TAB 2: 4-PHASE LIFECYCLE & MACRO REGIME -->
+    <div id="panel-lifecycle" class="panel">
+      <div class="controls">
+        <button class="pill active" data-regime="MOMENTUM_RUNNER">MOMENTUM_RUNNER</button>
+        <button class="pill" data-regime="NORMAL_CHOP">NORMAL_CHOP</button>
+        <button class="pill" data-regime="DEFENSIVE">DEFENSIVE</button>
+      </div>
+      <div class="slider-row">
+        <div class="slider-box">
+          <label><span>Bundler Concentration (<code>bundlers_hold_pct</code>)</span><strong id="bundlerVal">12%</strong></label>
+          <input type="range" id="bundlerSlider" min="0" max="50" value="12" />
+        </div>
+        <div class="slider-box">
+          <label><span>Brain Climate State</span><strong id="climateVal">Range (0.75×)</strong></label>
+          <input type="range" id="climateSlider" min="0" max="4" value="3" />
+        </div>
+      </div>
+      <div class="grid" id="lifecycleStats"></div>
+      <div class="phases" id="lifecyclePhases"></div>
+    </div>
+
+    <!-- TAB 3: FEE-DRAG & PAYOFF RATIO CALCULATOR -->
+    <div id="panel-calculator" class="panel">
+      <div class="slider-row">
+        <div class="slider-box">
+          <label><span>Position Stake (SOL)</span><strong id="stakeVal">0.010 SOL</strong></label>
+          <input type="range" id="stakeSlider" min="0.002" max="0.100" step="0.001" value="0.010" />
+        </div>
+        <div class="slider-box">
+          <label><span>Average Win (%)</span><strong id="winVal">+45%</strong></label>
+          <input type="range" id="winSlider" min="10" max="150" step="5" value="45" />
+        </div>
+        <div class="slider-box">
+          <label><span>Average Loss (%)</span><strong id="lossVal">-15%</strong></label>
+          <input type="range" id="lossSlider" min="5" max="50" step="1" value="15" />
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="calcChart"></canvas></div>
+      <div class="grid" id="calcStats"></div>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching + URL query param support (?view=ohlc|lifecycle|calculator)
+    function activateTab(name) {
+      document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+      document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+    }
+    document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => activateTab(btn.dataset.tab)));
+    const initialView = new URLSearchParams(location.search).get('view');
+    if (['ohlc', 'lifecycle', 'calculator'].includes(initialView)) activateTab(initialView);
+
+    // --- TAB 1: OHLC 3-PATTERN DEFENSE ---
+    const PATTERNS = {
+      C: {
+        labels: ['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9', 'm10'],
+        price: [0, 6, 11, 16, 22, 28, 34, 31, 29, 25, 19],
+        stop: [-12, -12, -2, 1, 1, 16, 22, 28, 28, 28, null],
+        exitIdx: 9,
+        exitLabel: '+25.0% (2-Bar Low Trail)',
+        staticResult: '-12.0% or Round-Trip',
+        saved: '+25.0% Locked',
+        note: 'Pattern C ratchets SL to -2% at +10% peak, locks breakeven (+1%) at +15%, and activates a dynamic 2-bar low trail at ≥ +25%—preventing profitable runners from round-tripping.'
+      },
+      A: {
+        labels: ['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7'],
+        price: [0, 1, -2.5, -5.0, -7.2, -14, -22, -35],
+        stop: [-15, -15, -15, -15, -7.2, null, null, null],
+        exitIdx: 4,
+        exitLabel: '-7.2% (3-Bar Breakdown)',
+        staticResult: '-35.0% Static SL',
+        saved: '+27.8% Drawdown Saved',
+        note: 'Pattern A detects 3 consecutive lower-low 1m candles with negative momentum (≤ -4%) and cuts early at -6% to -8% (93.6% empirical loss precision).'
+      },
+      B: {
+        labels: ['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6'],
+        price: [0, 2, -3, -6, -8.1, -18, -32],
+        stop: [-8, -8, -8, -8, -8, null, null],
+        exitIdx: 4,
+        exitLabel: '-8.0% (Warn Clamp)',
+        staticResult: '-32.0% Tail Bleed',
+        saved: '+24.0% Drawdown Saved',
+        note: 'Pattern B clamps stop-loss to -7.0% to -8.5% on Knowledge Graph warn tokens (20% ≤ bundlers < 35%), where empirical loss persistence past -8% is 98.8%.'
+      }
+    };
+
+    let ohlcChart;
+    function renderOhlc(key) {
+      const p = PATTERNS[key];
+      const ctx = document.getElementById('ohlcChart').getContext('2d');
+      if (ohlcChart) ohlcChart.destroy();
+      ohlcChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: p.labels,
+          datasets: [
+            {
+              label: 'Token Return (%)',
+              data: p.price,
+              borderColor: '#a3e635',
+              backgroundColor: 'rgba(163, 230, 53, 0.12)',
+              fill: true,
+              tension: 0.25,
+              pointRadius: p.price.map((_, i) => i === p.exitIdx ? 7 : 3),
+              pointBackgroundColor: p.price.map((_, i) => i === p.exitIdx ? '#fbbf24' : '#a3e635')
+            },
+            {
+              label: 'Active Defense SL (%)',
+              data: p.stop,
+              borderColor: '#f87171',
+              borderDash: [6, 4],
+              tension: 0,
+              pointRadius: 2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#ccc' } } },
+          scales: {
+            x: { ticks: { color: '#8a8f8a' }, grid: { color: '#1f1f24' } },
+            y: { ticks: { color: '#8a8f8a', callback: v => v + '%' }, grid: { color: '#1f1f24' } }
+          }
+        }
+      });
+      document.getElementById('ohlcStats').innerHTML = `
+        <div class="stat"><div class="label">Defense Exit</div><div class="val acc">${p.exitLabel}</div></div>
+        <div class="stat"><div class="label">Without Defense</div><div class="val neg">${p.staticResult}</div></div>
+        <div class="stat"><div class="label">Net Protection</div><div class="val pos">${p.saved}</div></div>
+      `;
+      document.getElementById('ohlcNote').textContent = p.note;
+    }
+    document.querySelectorAll('[data-pattern]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-pattern]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderOhlc(btn.dataset.pattern);
+      });
+    });
+    renderOhlc('C');
+
+    // --- TAB 2: 4-PHASE LIFECYCLE & MACRO REGIME ---
+    const REGIMES = {
+      MOMENTUM_RUNNER: { delay: '+45m – +60m (0.5×)', comp: '≤ 25%', slPass: 'Standard', slWarn: '-8.5%' },
+      NORMAL_CHOP: { delay: '+120m (1.0×)', comp: '≤ 25%', slPass: 'Standard', slWarn: '-8.0%' },
+      DEFENSIVE: { delay: '+180m (1.5×)', comp: '≤ 18% (Tight)', slPass: '-10% (0.50× size)', slWarn: '-7% (0.50× size)' }
+    };
+    const CLIMATES = [
+      { name: 'Cash (0.00×)', scale: 0 },
+      { name: 'De-risk (0.25×)', scale: 0.25 },
+      { name: 'Mixed (0.50×)', scale: 0.5 },
+      { name: 'Range (0.75×)', scale: 0.75 },
+      { name: 'Hype (1.00×)', scale: 1.0 }
+    ];
+    let currentRegime = 'MOMENTUM_RUNNER';
+    function renderLifecycle() {
+      const bundlers = Number(document.getElementById('bundlerSlider').value);
+      const climate = CLIMATES[Number(document.getElementById('climateSlider').value)];
+      const reg = REGIMES[currentRegime];
+      document.getElementById('bundlerVal').textContent = bundlers + '%';
+      document.getElementById('climateVal').textContent = climate.name;
+
+      const verdict = bundlers >= 35 ? 'VETO (Dropped)' : bundlers >= 20 ? 'WARN (Clamped)' : 'PASS (Clean)';
+      const vClass = bundlers >= 35 ? 'neg' : bundlers >= 20 ? 'warn' : 'pos';
+      const blocked = bundlers >= 35 || climate.scale === 0;
+
+      document.getElementById('lifecycleStats').innerHTML = `
+        <div class="stat"><div class="label">Front-Door KG Verdict</div><div class="val ${vClass}">${verdict}</div></div>
+        <div class="stat"><div class="label">Phase 2 Delay Timer</div><div class="val acc">${reg.delay}</div></div>
+        <div class="stat"><div class="label">Compression Gate</div><div class="val">${reg.comp}</div></div>
+        <div class="stat"><div class="label">Effective Size Scalar</div><div class="val ${climate.scale === 0 ? 'neg' : 'pos'}">${climate.scale.toFixed(2)}×</div></div>
+      `;
+      document.getElementById('lifecyclePhases').innerHTML = `
+        <div class="phase ${blocked ? 'blocked' : 'ok'}"><h4>Phase 1 · Discovery</h4><p>${bundlers >= 35 ? 'Rejected at front door: skip:graph_veto:bundlers_' + bundlers + '%' : 'Admitted to candidate queue (≥ +50% pump / 80% milestone).'}</p></div>
+        <div class="phase ${blocked ? 'blocked' : 'ok'}"><h4>Phase 2 · Post-Pump Base</h4><p>Waits ${reg.delay} for consolidation range ${reg.comp}. SL: ${bundlers >= 20 ? reg.slWarn : reg.slPass}.</p></div>
+        <div class="phase ${blocked ? 'blocked' : ''}"><h4>Phase 3 · Breakout-Retest</h4><p>Auto-enqueued when Phase 2 graduates (≥ +15% PnL or TP hit).</p></div>
+        <div class="phase ${blocked ? 'blocked' : ''}"><h4>Phase 4 · Reaccumulation</h4><p>24h+ smart-money base continuation after Phase 3 graduation.</p></div>
+      `;
+    }
+    document.querySelectorAll('[data-regime]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-regime]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentRegime = btn.dataset.regime;
+        renderLifecycle();
+      });
+    });
+    document.getElementById('bundlerSlider').addEventListener('input', renderLifecycle);
+    document.getElementById('climateSlider').addEventListener('input', renderLifecycle);
+    renderLifecycle();
+
+    // --- TAB 3: FEE-DRAG & PAYOFF RATIO CALCULATOR ---
+    let calcChart;
+    function renderCalc() {
+      const stake = Number(document.getElementById('stakeSlider').value);
+      const avgWin = Number(document.getElementById('winSlider').value);
+      const avgLoss = Number(document.getElementById('lossSlider').value);
+      const flatFee = 0.0003;
+      const feePct = (flatFee / stake) * 100;
+      const netWin = Math.max(0.1, avgWin - feePct);
+      const netLoss = avgLoss + feePct;
+      const R = netWin / netLoss;
+      const bewr = (1 / (1 + R)) * 100;
+
+      document.getElementById('stakeVal').textContent = stake.toFixed(3) + ' SOL';
+      document.getElementById('winVal').textContent = '+' + avgWin + '%';
+      document.getElementById('lossVal').textContent = '-' + avgLoss + '%';
+
+      const stakes = [0.002, 0.004, 0.006, 0.01, 0.02, 0.05, 0.1];
+      const drags = stakes.map(s => Number(((flatFee / s) * 100).toFixed(2)));
+      const ctx = document.getElementById('calcChart').getContext('2d');
+      if (calcChart) calcChart.destroy();
+      calcChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: stakes.map(s => s + ' SOL'),
+          datasets: [{
+            label: 'Flat Paper Fee Drag (0.0003 SOL) %',
+            data: drags,
+            backgroundColor: drags.map(d => d > 5 ? 'rgba(248,113,113,0.75)' : d > 2 ? 'rgba(251,191,36,0.75)' : 'rgba(163,230,53,0.8)'),
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#ccc' } } },
+          scales: {
+            x: { ticks: { color: '#8a8f8a' }, grid: { color: '#1f1f24' } },
+            y: { ticks: { color: '#8a8f8a', callback: v => v + '%' }, grid: { color: '#1f1f24' } }
+          }
+        }
+      });
+
+      document.getElementById('calcStats').innerHTML = `
+        <div class="stat"><div class="label">Flat Fee Drag</div><div class="val ${feePct > 3 ? 'neg' : 'pos'}">${feePct.toFixed(2)}%</div></div>
+        <div class="stat"><div class="label">Net Payoff Ratio (R)</div><div class="val acc">${R.toFixed(2)}×</div></div>
+        <div class="stat"><div class="label">Break-Even Win Rate</div><div class="val">${bewr.toFixed(1)}%</div></div>
+      `;
+    }
+    ['stakeSlider', 'winSlider', 'lossSlider'].forEach(id => document.getElementById(id).addEventListener('input', renderCalc));
+    renderCalc();
+  </script>
+</body>
+</html>
