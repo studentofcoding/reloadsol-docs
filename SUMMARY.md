@@ -22,24 +22,3 @@
 * [Stop-Loss, Take-Profit & In-Flight OHLC Defense](risk-and-mechanics/sl-tp-and-exit-protection.md)
 * [Rug Detection, Dev Reputation & Knowledge Graph](risk-and-mechanics/rug-detection-and-knowledge-graph.md)
 * [Macro Market Regime & Position Sizing](risk-and-mechanics/market-regime-and-position-sizing.md)
-
-## Developer & Quant Console
-
-* [Dev & Admin Console Overview](dev-console/overview-and-access.md)
-* [Strategy Engine, Signals & Algo Tester](dev-console/strategies-and-algo-tester.md)
-* [Meteora DLMM, Robinhood CLMM & Arbitrage](dev-console/liquidity-and-arbitrage.md)
-* [Machine Learning Pipeline & Admin Evaluation](dev-console/ml-and-evaluation.md)
-* [Token Search, RPC Diagnostics & System Health](dev-console/search-rpc-and-diagnostics.md)
-
-## Developer Reference
-
-* [System Architecture & Data Layer](developer-reference/system-architecture.md)
-* [REST & SSE API Reference](developer-reference/api-reference.md)
-* [Smart Contracts & Background Workers](developer-reference/smart-contracts-and-cron.md)
-* [Operations, Deployment & Troubleshooting](developer-reference/operations-and-deployment.md)
-
-## Resources
-
-* [Trading & Platform Glossary](resources/glossary.md)
-* [Brand & GitBook Customization Guide](resources/brand-and-customization.md)
-* [Documentation Audit & Architecture Blueprint](resources/documentation-audit.md)

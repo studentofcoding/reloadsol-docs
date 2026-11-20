@@ -8,17 +8,7 @@ description: Complete user and developer documentation for reloadSol — a dual-
 
 For everyday traders, reloadSol turns fragmented wallet dust and multi-token portfolios back into native **SOL** or **ETH** in 1–2 clicks—reclaiming locked Solana token account rent along the way—while also providing multi-token bulk buys, single-pair swaps, real-time charts, cross-chain watchlists, and receipt-verified P&L tracking.
 
-For quantitative operators and developers, reloadSol ships a full institutional-grade automation stack under `/dev/*` and `/admin/*`: multi-domain paper and live strategy engines, Meteora DLMM and Robinhood CLMM liquidity managers, a Semantic Knowledge Graph anti-cabal filter, In-Flight OHLC 3-Pattern exit protection, and an ONNX-served LightGBM machine learning pipeline.
-
----
-
-## Interactive Strategy & Trading Mechanics Lab
-
-Explore reloadSol's live strategy playbooks, **In-Flight OHLC 3-Pattern Defense**, **4-Phase Viral Runners Lifecycle**, and **Fee-Drag / Payoff-Ratio Calculator** interactively:
-
-{% embed url="https://studentofcoding.github.io/reloadsol-docs/widgets/index.html?view=strategies" %}
-Interactive reloadSol Strategy & Trading Mechanics Lab
-{% endembed %}
+The automated strategy engine, `/dev/*` operator consoles and `/admin/*` evaluation suites are documented in a separate **internal** space, available to the team only — they are intentionally not part of this public site.
 
 ---
 
@@ -28,8 +18,7 @@ Interactive reloadSol Strategy & Trading Mechanics Lab
 | :--- | :--- | :--- |
 | **New & Active Traders** | [Quickstart Guide](getting-started/quickstart.md) | Connect your wallet, sweep dust into SOL/ETH, reclaim rent, execute bulk buys, and track P&L. |
 | **Execution & Risk Deep Dive** | [Order Execution, Slippage & Fees](trading/order-execution-and-mechanics.md) | How Jupiter Swap V2, Kyber, BatchExecutor, dynamic slippage, and pre-sign simulation work. |
-| **Quant & Strategy Operators** | [Dev & Admin Console Overview](dev-console/overview-and-access.md) | Configure strategies, inspect open/closed positions, monitor the 4-phase Viral Runners lifecycle, and audit ML readiness. |
-| **Platform Engineers & Integrators** | [System Architecture & Data Layer](developer-reference/system-architecture.md) | Docker Compose topology, Postgres/PgBouncer/Redis data flows, REST/SSE API auth tiers, and deployment runbooks. |
+| **Risk & Exit Mechanics** | [Stop-Loss, Take-Profit & In-Flight OHLC Defense](risk-and-mechanics/sl-tp-and-exit-protection.md) | How positions are protected in flight and how rug detection gates entries. |
 
 ---
 
