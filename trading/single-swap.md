@@ -1,56 +1,66 @@
 ---
-description: Execute focused single-pair swaps on Solana via Jupiter Terminal and on Robinhood Chain via RhSwap (KyberSwap + BatchExecutor / Permit2).
+description: Swap a single token pair on Solana with Jupiter Terminal or on Robinhood Chain with KyberSwap and one-click Permit2 batching.
+last_reviewed: 2026-11-21
 ---
 
-# Single Swap & Aggregator Routing
+# Single swap
 
-**Routes:** `/swap`, `/swap/solana`, `/swap/robinhood`
+**TL;DR:** Use `/swap` for focused single-pair trades—**Jupiter Terminal** on Solana Mainnet (an embedded aggregator routing across Solana DEXs) and **RhSwap** (KyberSwap + Permit2) on Robinhood Chain.
 
-When you want to swap a single pair with full route visibility—rather than a multi-token batch—use `/swap`. reloadSol automatically renders the native execution engine for your active chain.
+[Open Single Swap →](https://reloadsol.app/swap/solana)
 
----
-
-## Solana: Jupiter Terminal (`/swap/solana`)
-
-On Solana Mainnet, `/swap` embeds the **Jupiter Terminal** widget pre-configured with **SOL** and **USDC** presets and connected directly to your active Solana wallet and RPC context.
-
-* **Best-Price Aggregation:** Routes across Raydium, Orca, Meteora DLMM, Pump.fun, Lifinity, and other Solana DEX venues.
-* **Direct & Multi-Hop Routing:** Supports native-to-token, token-to-native, and token-to-token swaps.
-* **Instant Preset Pairs:** Quick toggles for SOL/USDC and any pasted SPL or Token-2022 mint address.
+![Single Swap Paper mode safety guard on Solana](../.gitbook/assets/screens/desktop/swap-solana.png "Single Swap · Paper mode safety guard")
 
 ---
 
-## Robinhood Chain: RhSwap (`/swap/robinhood`)
+## Swap a single pair in 3 steps
 
-On Robinhood Chain (`4663`), `/swap` renders reloadSol's in-house **RhSwap Panel** (`RhGmgnSwapPanel.tsx`), supporting both quote-pair (`ETH`/`WETH`/`USDG` ↔ token) and direct token-to-token swaps.
+{% stepper %}
+{% step %}
+### Open Single Swap
 
-### Parent Wallet Execution Precedence
+Go to [https://reloadsol.app/swap/solana](https://reloadsol.app/swap/solana) (or [https://reloadsol.app/swap/robinhood](https://reloadsol.app/swap/robinhood) on Robinhood Chain).
+{% endstep %}
 
-When trading with a browser wallet (Rabby / EIP-6963), reloadSol automatically selects the cleanest available execution lane:
+{% step %}
+### Pick input and output tokens
 
-```mermaid
-flowchart TD
-    A["User Clicks Swap on /swap/robinhood"] --> B{"RH_BATCH_EXECUTOR_ADDRESS<br/>set & Permit2 Ready?"}
-    B -- Yes --> C["1-Click Atomic executeBatch<br/>(Wrap + Permit2 Pull + Kyber Swap)"]
-    B -- No --> D{"Wallet supports EIP-5792<br/>atomic on Chain 4663?"}
-    D -- Yes --> E["wallet_sendCalls<br/>+ waitForCallsStatus"]
-    D -- No --> F["Sequential Fallback<br/>(ERC-20 Approve → Kyber Swap)"]
-    C --> G["Wait for On-Chain Receipt"]
-    E --> G
-    F --> G
-    G --> H{"receipt.status === 'success'?"}
-    H -- Yes --> I["Mark Confirmed + Blockscout Link + SSE Push"]
-    H -- No --> J["Mark Failed + Error Detail"]
-```
+Select a quick preset (**SOL / USDC** on Solana; **ETH / WETH / USDG** on Robinhood Chain) or paste any token address, then enter your amount.
+{% endstep %}
 
-### One-Time Permit2 & BatchExecutor Setup
+{% step %}
+### Review route and confirm
 
-To unlock **1-click atomic swaps** on Robinhood Chain without repeating ERC-20 `approve()` transactions before every sell:
+Inspect the quoted output, [price impact](../getting-started/trading-terms.md#quote-and-execution), and [slippage](../getting-started/trading-terms.md#quote-and-execution), then approve the prompt in your wallet.
+{% endstep %}
+{% endstepper %}
 
-1. Approve your ERC-20 token once to the canonical **Permit2** contract (`0x0000...8BA3` on chain `4663`).
-2. Grant Permit2 allowance to the `BatchExecutor` spender (`permit2.approve(token, spender, maxUint160, maxUint48)`).
-3. Once readiness is active (`rh-permit2-readiness.ts`), every subsequent swap or multi-token batch requires **only one signature**.
+---
 
-{% hint style="info" %}
-**No Custody Transfer During Setup:** Permit2 setup only configures approval permissions—it never moves funds. Every trade still displays a full review modal (`GmgnTradeConfirmModal`) and requires your explicit wallet confirmation.
+## Execution by network
+
+{% tabs %}
+{% tab title="Solana Mainnet" %}
+* Powered by **Jupiter Terminal**, routing across Raydium, Orca, Meteora, Pump.fun, and other Solana DEXs.
+* Supports native-to-token, token-to-native, and token-to-token swaps.
+* In **Paper mode**, Jupiter Terminal is deliberately unmounted so it cannot trigger a real wallet signature—use [Bulk Buy](bulk-buy.md) or [Bulk Sell](bulk-sell-and-dust-reload.md) for paper fills instead.
+{% endtab %}
+
+{% tab title="Robinhood Chain (4663)" %}
+* Powered by **KyberSwap Aggregator** through reloadSol's in-house swap panel.
+* **Precedence:** One-click atomic **BatchExecutor** (after one-time Permit2 setup) → **EIP-5792** (`wallet_sendCalls`) → **Sequential** (Approve then Swap).
+* Every mined receipt is checked—reverted transactions are always marked **Failed**, never **Confirmed**.
+{% endtab %}
+{% endtabs %}
+
+{% hint style="warning" %}
+**No resting limit orders:** `/swap` executes spot market swaps at current pool liquidity. reloadSol does not place resting limit orders or exchange-side stop orders.
 {% endhint %}
+
+---
+
+## Related
+
+* [Order execution, slippage & fees](order-execution-and-mechanics.md)
+* [Practice with Paper mode](../getting-started/paper-mode.md)
+* [Wallets & Supported Networks](../getting-started/wallets-and-networks.md)

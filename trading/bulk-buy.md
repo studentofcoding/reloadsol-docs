@@ -1,64 +1,65 @@
 ---
-description: Allocate native SOL, ETH, WETH, or USDG across multiple tokens in a single coordinated batch with built-in risk screening and affordability checks.
+description: Buy up to 4 tokens at once on Solana or Robinhood Chain from a single spend amount, with $0.50/token minimum, inline risk checks, and affordability guards.
+last_reviewed: 2026-11-21
 ---
 
-# Bulk Buy & Multi-Token Allocation
+# Bulk buy up to 4 tokens
 
-**Routes:** `/buy`, `/buy/solana`, `/buy/robinhood`
+**TL;DR:** Paste up to **4 token addresses** on `/buy/solana` or `/buy/robinhood`, set one total spend amount (minimum **$0.50 per token**), review inline risk indicators, and execute in a single coordinated batch.
 
-Bulk Buy lets you deploy capital across multiple tokens simultaneously from a single total spend amount, eliminating repetitive single-swap workflows during fast-moving market windows.
+[Open Bulk Buy →](https://reloadsol.app/buy/solana)
 
----
-
-## Key Capabilities
-
-* **Multi-Token Batch Cap:** Buy up to **4 tokens per batch** on Solana (`MAX_TRADE_TOKENS_SOL = 4`) and **4 tokens per batch** on Robinhood Chain (`MAX_TRADE_TOKENS_RH = 4`, bounded by the `BatchExecutor` UX) — see `src/utils/trade-ui-limits.ts`. Each token needs at least **`$0.50`** of the total spend (`MIN_BUY_USD_PER_TOKEN`), and the slider floor is derived from that so a 1 % step can never fall under it.
-* **Flexible Input Parsing:** Paste one or multiple contract addresses (CAs) separated by spaces, commas, or newlines. reloadSol parses and validates each address into interactive token chips with live logos, symbols, and prices.
-* **One-Click Append from Discovery:** Tokens from trending boards, signal toasts, or search can be appended directly into your active buy basket.
-* **Built-In Risk Analysis (`RiskAnalysis.tsx`):** Before you execute, reloadSol surfaces token risk indicators (holder concentration, liquidity depth, rug signals, and metadata anomalies) inline for each token in the basket.
-* **Supported Spend Assets:**
-  * **Solana:** `SOL`
-  * **Robinhood Chain:** `ETH`, `WETH`, or `USDG`
+![Bulk Buy screen with 4-token cap in Paper mode](../.gitbook/assets/screens/desktop/buy-solana.png "Bulk Buy · Solana 4-token cap (Paper mode)")
 
 ---
 
-## Smart Quoting, Warm-on-Intent & Affordability Gates
+## Execute a bulk buy in 4 steps
 
-To deliver fast execution without exhausting RPC or Jupiter rate limits, Bulk Buy uses two coordinated safeguards:
+{% stepper %}
+{% step %}
+### Open Bulk Buy
 
-1. **Warm-on-Intent Quoting (`useWarmOnIntent`):**
-   * Rather than hammering the execution quote API on every keystroke, reloadSol shows fast display estimates via the shared quote engine (`purpose: 'estimate'`) and only warms execution quotes after `1.5 seconds` of input idle or when your cursor/focus reaches the **Buy** button.
-   * Clicking **Buy** always builds fresh `purpose: 'execute'` quotes—stale display estimates are never signed.
-2. **Pre-Quote Affordability Gate (`warmAffordability` & `requiredBuySol`):**
-   * On Solana, reloadSol checks your native SOL balance before warming or signing to ensure you can cover:
-     $$\text{Required SOL} = \text{Total Swap Spend} + \text{Priority Fees} + (N_{\text{new ATAs}} \times 0.00203928\text{ SOL}) + \text{Base Tx Fees}$$
-   * Empty or underfunded wallets are caught cleanly with clear user messaging (`describeBuyFailure`) instead of triggering cryptic `422 Insufficient funds` aggregator errors.
+Visit [https://reloadsol.app/buy/solana](https://reloadsol.app/buy/solana) (or [https://reloadsol.app/buy/robinhood](https://reloadsol.app/buy/robinhood) on Robinhood Chain).
+{% endstep %}
+
+{% step %}
+### Add up to 4 tokens
+
+Paste up to **4** contract addresses separated by spaces, commas, or newlines, or click a token from trending/search to append it to your basket.
+{% endstep %}
+
+{% step %}
+### Set spend amount and review risk
+
+Choose your spend asset (**SOL** on Solana; **ETH**, **WETH**, or **USDG** on Robinhood Chain) and enter a total spend of at least **$0.50 per token**. Review the inline risk chips for each token.
+{% endstep %}
+
+{% step %}
+### Sign and verify settlement
+
+Click **Buy**. reloadSol fetches fresh execution quotes, checks your SOL reserve (including ATA rent for new accounts), simulates all legs, and opens one wallet approval.
+{% endstep %}
+{% endstepper %}
 
 ---
 
-## Execution Flow by Network
+## Execution limits and behavior
 
-{% tabs %}
-{% tab title="Solana Mainnet" %}
-1. reloadSol requests fresh Jupiter Swap V2 `/order` transactions for each token leg in the basket (falling back to Jupiter Lite only if V2 fails).
-2. Routes exceeding `SWAP_QUOTE_MAX_IMPACT_PCT` (default `15%`) are rejected to protect you from illiquid traps.
-3. All prepared v0 transactions pass `simulateExact` with their live blockhash.
-4. Your wallet prompts once via `signAllTransactions`.
-5. Signed transactions are submitted through Jupiter `/execute` (managed landing, ~`1.5s–2.1s` end-to-end) or direct Shyft/RPC fallback with WebSocket confirmation.
-6. Each leg is tracked independently in `/history` and `/pnl`.
-{% endtab %}
+| Setting | Default | Details |
+| :--- | :--- | :--- |
+| **Max tokens per batch** | **4 tokens** | Applies to both Solana and Robinhood Chain. |
+| **Minimum spend** | **$0.50 per token** | Prevents dust-sized buys that lose value to flat network fees. |
+| **Max price impact** | **15%** | Routes above 15% [price impact](../getting-started/trading-terms.md#quote-and-execution) are discarded before signing. |
+| **Solana balance reserve** | Spend + fees + ATA rent | Reserves `~0.00203928 SOL` per new token account automatically. |
 
-{% tab title="Robinhood Chain (4663)" %}
-1. **Parent Wallet (Rabby / EIP-6963):**
-   * Fetches parallel KyberSwap `/routes` and `/builds` for all legs.
-   * **BatchExecutor Mode (Recommended):** Wraps ETH if needed, pulls tokens via Permit2, and executes all `N` swaps inside **one atomic `executeBatch` transaction**.
-   * **EIP-5792 Mode:** Uses `wallet_sendCalls` + `waitForCallsStatus` when the wallet reports `atomic: supported/ready` for chain `4663`.
-   * **Sequential Fallback:** Prompts per-leg Approve/Swap with explicit index attribution (`RhSequentialWriteError`), ensuring partial fills are accurately recorded and reconcilable.
-2. **Bound Wallet (Operator / GMGN):**
-   * Executes sequentially through `/api/gmgn/trade/quote` → `/api/gmgn/trade/swap` → `/api/gmgn/trade/order` polling.
-{% endtab %}
-{% endtabs %}
-
-{% hint style="info" %}
-**Dev Shortcut:** When connected with a dev wallet, `/buy` also displays a compact link to `/dev/insight` for the per-network Data-Public Scout and Macro Climate indicator.
+{% hint style="warning" %}
+**Partial batch fills on Solana:** Each token leg in a Solana bulk buy is an independent swap transaction signed together. If 3 legs confirm and 1 leg reverts due to sudden slippage, the 3 confirmed legs settle and the 1 failed leg is clearly flagged in [History](https://reloadsol.app/history).
 {% endhint %}
+
+---
+
+## Related
+
+* [Practice with Paper mode](../getting-started/paper-mode.md)
+* [Order execution, slippage & fees](order-execution-and-mechanics.md)
+* [P&L, trade history & portfolio](pnl-history-and-portfolio.md)

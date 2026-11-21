@@ -2,23 +2,34 @@
 
 * [Welcome to reloadSol](README.md)
 
-## Getting Started
+## Start Here
 
+* [Open reloadSol ↗](https://reloadsol.app)
 * [Quickstart Guide](getting-started/quickstart.md)
+* [Trading terms in 5 minutes](getting-started/trading-terms.md)
+* [Stay safe on reloadSol](getting-started/safety-and-security.md)
 * [Wallets & Supported Networks](getting-started/wallets-and-networks.md)
-* [Paper Trading & Transaction Safety](getting-started/paper-trading-and-safety.md)
+* [Practice with Paper mode](getting-started/paper-mode.md)
+* [What is checked before you sign](getting-started/paper-trading-and-safety.md)
 
-## Public Trading Platform
+## Trade
 
-* [Bulk Sell, Dust Sweep & Rent Reclaim](trading/bulk-sell-and-dust-reload.md)
-* [Bulk Buy & Multi-Token Allocation](trading/bulk-buy.md)
-* [Single Swap & Aggregator Routing](trading/single-swap.md)
-* [Order Execution, Slippage & Fees](trading/order-execution-and-mechanics.md)
-* [Charts, Watchlist & Market Discovery](trading/charts-watchlist-and-discovery.md)
-* [P&L Tracker, Trade History & Portfolio](trading/pnl-history-and-portfolio.md)
+* [Sweep dust & reclaim rent](trading/bulk-sell-and-dust-reload.md)
+* [Bulk buy up to 4 tokens](trading/bulk-buy.md)
+* [Single swap](trading/single-swap.md)
+* [Order execution, slippage & fees](trading/order-execution-and-mechanics.md)
+* [Charts, watchlist & discovery](trading/charts-watchlist-and-discovery.md)
+* [P&L, trade history & portfolio](trading/pnl-history-and-portfolio.md)
 
-## Risk Management & Mechanics
+## Understand Risk
 
-* [Stop-Loss, Take-Profit & In-Flight OHLC Defense](risk-and-mechanics/sl-tp-and-exit-protection.md)
-* [Rug Detection, Dev Reputation & Knowledge Graph](risk-and-mechanics/rug-detection-and-knowledge-graph.md)
-* [Macro Market Regime & Position Sizing](risk-and-mechanics/market-regime-and-position-sizing.md)
+* [Risk basics for spot traders](risk-and-mechanics/risk-basics.md)
+* [Exit mechanics & protection](risk-and-mechanics/sl-tp-and-exit-protection.md)
+* [Rug detection & knowledge graph](risk-and-mechanics/rug-detection-and-knowledge-graph.md)
+* [Market climate & sizing](risk-and-mechanics/market-regime-and-position-sizing.md)
+
+## Help
+
+* [Troubleshooting & FAQ](help/troubleshooting-and-faq.md)
+* [Risk disclosure](help/risk-disclosure.md)
+* [Interactive lab ↗](https://studentofcoding.github.io/reloadsol-docs/widgets/index.html)

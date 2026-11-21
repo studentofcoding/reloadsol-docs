@@ -8,8 +8,8 @@
   <meta property="og:description" content="Interactive strategy playbooks, In-Flight OHLC 3-Pattern Defense, 4-Phase Viral Runners Lifecycle and Fee-Drag calculator." />
   <meta name="twitter:title" content="reloadSol — Interactive Trading &amp; Strategy Lab" />
   <link rel="alternate" type="application/json+oembed" href="https://studentofcoding.github.io/reloadsol-docs/widgets/oembed.json" title="reloadSol Interactive Lab" />
-  <title>reloadSol — Interactive Trading & Strategy Lab</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <title>reloadSol — Interactive Trading &amp; Mechanics Lab</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" integrity="sha384-JUh163oCRItcbPme8pYnROHQMC6fNKTBWtRG3I3I0erJkzNgL7uxKlNwcrcFKeqF" crossorigin="anonymous"></script>
   <style>
     :root {
       --bg: #000000;
@@ -183,6 +183,14 @@
 </head>
 <body>
   <div class="shell">
+    <noscript>
+      <div style="padding:14px 16px;background:#1a1a1e;color:#fbbf24;border-bottom:1px solid #2a2a2e;font-size:13px">
+        JavaScript is required to run the interactive calculators. Return to <a href="https://reloadsol.app" style="color:#a3e635">reloadsol.app</a> or read the written guides.
+      </div>
+    </noscript>
+    <div style="padding:8px 16px;background:rgba(251,191,36,0.1);border-bottom:1px solid #2a2a2e;font-size:12px;color:#fbbf24">
+      <strong>Illustrative example — not a backtest, not past performance.</strong> Curves below are synthetic teaching models showing how exit mechanics, fees, and sizing interact.
+    </div>
     <div class="topbar">
       <div class="brand"><span class="dot"></span> reloadSol Interactive Lab</div>
       <div class="tabs">
@@ -281,42 +289,42 @@
     const initialView = new URLSearchParams(location.search).get('view');
     if (['strategies', 'ohlc', 'lifecycle', 'calculator'].includes(initialView)) activateTab(initialView);
 
-    // --- TAB 0: MULTI-STRATEGY SIMULATOR ---
+    // --- TAB 0: MULTI-STRATEGY SIMULATOR (Mechanism names only — illustrative) ---
     const STRATEGIES = {
       early_surge: {
-        name: 'signals_early_surge_scalp',
-        sl: '-6% (Pattern A) / -5% Stall',
-        tp: 'BE +18% · 2-Bar Trail ≥ +30%',
+        name: 'Early-Momentum Scalp (Illustrative)',
+        sl: '-6% Breakdown Cut / -5% Stall',
+        tp: 'Breakeven +18% · 2-Bar Trail ≥ +30%',
         trades: [22, -6, 38, -5, 19, -6, 44, -5, 28, -6, 52, 18],
-        note: 'Fast-cycle launch-to-surge scalper ($15k→$60k MC) on clean tokens (bundlers < 20%, clean deployer). Uses In-Flight OHLC 3-Pattern Defense as an active sell machine.'
+        note: 'Illustrative model of a tight-stop momentum scalp paired with dynamic trailing profit locks.'
       },
       post_pump: {
-        name: 'signals_post_pump_base',
-        sl: '-10% (DEFENSIVE) / -8% Warn',
-        tp: '+15% Graduation → Phase 3',
+        name: 'Post-Pump Consolidation (Illustrative)',
+        sl: '-10% Defensive / -8% Tight',
+        tp: '+15% Target Continuation',
         trades: [18, -8, 26, 32, -10, 21, 40, -7, 16, 29, -8, 35],
-        note: 'Phase 2 Viral Runners strategy: waits +45m/+120m/+180m (regime-scaled) for tight consolidation (≤18–25% range) before entering post-pump continuation.'
+        note: 'Illustrative model waiting for post-impulse base compression before entering continuation.'
       },
       vwap_shelf: {
-        name: 'signals_vwap_shelf_breakout',
-        sl: '-10% Hard / Pattern A Cut',
-        tp: 'TP1 +25% · TP2 +50% · EMA-9 Trail',
+        name: 'Mid-Cap Shelf Breakout (Illustrative)',
+        sl: '-10% Hard / Breakdown Cut',
+        tp: 'TP1 +25% · TP2 +50% · Trail',
         trades: [28, 48, -9, 25, -10, 54, 26, -8, 34, 52, -10, 41],
-        note: 'Mid-Cap ($250k–$1M) 15m Anchored VWAP breakout with Bollinger Band squeeze ≤ 12%, positive CVD, deep pool TVL ($40k–$150k+), and Rule 5 Brand Impersonation Veto.'
+        note: 'Illustrative model of a deeper-liquidity mid-cap breakout with tiered profit taking.'
       },
       att: {
-        name: 'att (Trending Bot)',
-        sl: '-35% Static SL · 24h Max Hold',
-        tp: 'TP1 +45% (Sell 90%) · TP2 +100%',
+        name: 'Wide-Stop Trend Follower (Illustrative)',
+        sl: '-35% Wide SL · 24h Max Hold',
+        tp: 'TP1 +45% (Partial) · TP2 +100%',
         trades: [45, -35, 92, -35, 45, 48, -35, 100, -35, 45, 60, -35],
-        note: 'Canonical trending_bot playbook consuming GMGN market rank (≥200k MC floor) with 24h re-entry cooldown and max 2 purchases per token.'
+        note: 'Illustrative model contrasting wide static stops against tighter trailing defense.'
       },
       dlmm: {
-        name: 'dlmm_range_fee_accumulator',
-        sl: '-10% SL · 16m OOR Timeout',
-        tp: '+5% TP / ≥15% Daily Fee Yield',
+        name: 'Concentrated LP Fee Range (Illustrative)',
+        sl: '-10% SL · Out-of-Range Exit',
+        tp: '+5% TP / Range Fee Accrual',
         trades: [5.2, 4.8, -6.5, 5.1, 6.0, 4.4, -8.2, 5.5, 4.9, 5.3, 4.7, 5.8],
-        note: 'Non-directional Meteora Concentrated DLMM (±15% range) harvesting swap fees on range-bound mid-cap chop, managed by Hunter (300s) + Healer (60s).'
+        note: 'Illustrative model of non-directional concentrated liquidity fee harvesting in range-bound markets.'
       }
     };
     const STRAT_CLIMATES = [
