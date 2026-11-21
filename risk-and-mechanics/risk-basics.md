@@ -1,5 +1,5 @@
 ---
-description: Essential risk management for spot traders: drawdown recovery math, payoff ratios, break-even win rate, and fixed-fee drag on small stakes.
+description: "Essential risk management for spot traders: drawdown recovery math, payoff ratios, break-even win rate, and fixed-fee drag on small stakes."
 last_reviewed: 2026-11-21
 ---
 

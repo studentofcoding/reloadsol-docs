@@ -7,7 +7,7 @@ last_reviewed: 2026-11-21
 
 **TL;DR:** Open [reloadsol.app](https://reloadsol.app/), paste any Solana address to check recoverable SOL, or connect Phantom/Solflare to sweep dust on `/sell/solana`. Want to test first with no wallet? Turn on **Paper** in the header for **1 SOL/day** of simulated fills.
 
-[Open reloadSol →](https://reloadsol.app/)
+[Open reloadsol.app →](https://reloadsol.app/)
 
 ![reloadSol landing page with Wallet Check](../.gitbook/assets/screens/desktop/home.png "Landing · Signed-out Wallet Check")
 

@@ -1,5 +1,5 @@
 ---
-description: Fix common reloadSol issues: wallet connection stalls, 0 SOL for gas, quote unavailable, pending vs failed swaps, and missing token prices.
+description: "Fix common reloadSol issues: wallet connection stalls, 0 SOL for gas, quote unavailable, pending vs failed swaps, and missing token prices."
 last_reviewed: 2026-11-21
 ---
 

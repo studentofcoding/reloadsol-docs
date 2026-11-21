@@ -4,7 +4,7 @@
 
 ## Start Here
 
-* [Open reloadSol ↗](https://reloadsol.app)
+* [Open reloadsol.app ↗](https://reloadsol.app)
 * [Quickstart Guide](getting-started/quickstart.md)
 * [Trading terms in 5 minutes](getting-started/trading-terms.md)
 * [Stay safe on reloadSol](getting-started/safety-and-security.md)
