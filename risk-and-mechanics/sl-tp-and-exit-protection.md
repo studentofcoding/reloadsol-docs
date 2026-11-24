@@ -21,6 +21,15 @@ reloadSol public trading surfaces are **spot, fully-collateralised, non-custodia
 
 ## Practical exit discipline for spot traders
 
+```mermaid
+flowchart TD
+    B[Enter Spot Position] --> P{Price action}
+    P -->|Hits invalidation level| SL[Exit via Fast Sell on /pnl]
+    P -->|Rises +25% to +50%| TP1[Take 50% partial via Bulk Sell preset]
+    TP1 --> RUN[Hold remaining runner · watch pool liquidity]
+    RUN --> EXIT[Exit runner into strength or breakeven]
+```
+
 Because you sign every exit yourself, plan your exit *before* you buy:
 
 | Exit habit | Why it helps |

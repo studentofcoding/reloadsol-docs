@@ -22,6 +22,9 @@ last_reviewed: 2026-11-21
 | **Price impact** | How much your own order size shifts a pool's price due to limited liquidity. | Separate from slippage; routes above **15%** impact are rejected before signing. |
 | **Priority fee** | Small extra network fee paid to Solana validators for faster inclusion. | Paid in SOL alongside the base transaction fee. |
 | **Platform fee** | Optional 0.25% (25 bps) transfer fee on supported swaps. | Always fail-open—a fee error never blocks your swap. |
+| **SPL / Token-2022** | Solana's standard and extended fungible token programs. | Both token standards are supported for bulk buys, sells, and ATA rent reclaim. |
+| **Permit2** | Signature-based ERC-20 approval standard on EVM chains. | Enables one-click batched swaps on Robinhood Chain (`4663`) after one-time setup. |
+| **RPC / SSE** | Remote Procedure Call (chain node) and Server-Sent Events (live push). | Pre-sign simulation runs against live RPC; **Confirming → Confirmed** updates push via SSE. |
 
 ---
 

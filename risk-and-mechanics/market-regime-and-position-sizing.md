@@ -13,6 +13,15 @@ last_reviewed: 2026-11-21
 
 ## Reading the Market Climate chip
 
+```mermaid
+flowchart LR
+    M[Header Climate Chip] --> H[Hype · 1.00x normal size]
+    M --> R[Range · 0.75x selective]
+    M --> X[Mixed · 0.50x half size]
+    M --> D[De-risk · 0.25x defensive]
+    M --> C[Cash · stand down]
+```
+
 | Climate state | Typical posture | Suggested sizing discipline |
 | :--- | :--- | :--- |
 | **Hype** | Strong positive BTC/SOL trend and breadth | Normal spot position size (`1.00×`). |

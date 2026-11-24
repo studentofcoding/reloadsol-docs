@@ -1,4 +1,6 @@
 $schema: https://api.gitbook.com/gitbook-docs.yaml
+version: 1
+
 site:
   title: reloadSol
   structure:

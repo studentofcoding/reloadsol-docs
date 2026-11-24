@@ -21,6 +21,14 @@ reloadSol public trading surfaces are **spot, fully-collateralised, non-custodia
 
 ## Drawdown recovery math
 
+```mermaid
+flowchart LR
+    E[Entry 100%] --> D1[-10% loss] --> R1[Needs +11.1% to break even]
+    E --> D2[-25% loss] --> R2[Needs +33.3% to break even]
+    E --> D3[-50% loss] --> R3[Needs +100.0% to break even]
+    E --> D4[-80% loss] --> R4[Needs +400.0% to break even]
+```
+
 Losses and gains are asymmetric. The deeper a [drawdown](../getting-started/trading-terms.md#risk-metrics) gets, the harder it is to recover:
 
 | Drawdown from entry | Gain required to break even |

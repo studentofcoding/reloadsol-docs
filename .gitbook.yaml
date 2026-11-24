@@ -6,5 +6,5 @@ structure:
 
 redirects:
   getting-started: getting-started/quickstart.md
-  api: developer-reference/api-reference.md
-  glossary: resources/glossary.md
+  api: help/architecture-and-data-feeds.md
+  glossary: getting-started/trading-terms.md

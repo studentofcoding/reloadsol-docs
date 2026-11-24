@@ -13,6 +13,17 @@ last_reviewed: 2026-11-21
 
 ## What you can inspect before buying
 
+```mermaid
+flowchart LR
+    T[Token candidate] --> C1{Price impact <= 15%?}
+    C1 -- No --> X1[Route rejected pre-sign]
+    C1 -- Yes --> C2[Check inline risk chips on /buy]
+    C2 --> C3[Inspect /knowledge-graph<br/>deployer & holder clusters]
+    C3 --> D{Clean enough for your size?}
+    D -- Yes --> BUY[Size conservatively & sign]
+    D -- No --> SKIP[Skip trade]
+```
+
 | Signal | Where you see it | What to watch for |
 | :--- | :--- | :--- |
 | **Inline risk chips** | [Bulk Buy](https://reloadsol.app/buy/solana) | Flags high top-holder concentration, thin liquidity, or metadata anomalies. |
