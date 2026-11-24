@@ -1,6 +1,8 @@
 ---
-description: Important risk disclosure for using reloadSol's non-custodial on-chain trading tools on Solana and Robinhood Chain.
-last_reviewed: 2026-11-21
+last_reviewed: 2026-11-21T00:00:00.000Z
+description: >-
+  Important risk disclosure for using reloadSol's non-custodial on-chain trading
+  tools on Solana and Robinhood Chain.
 ---
 
 # Risk disclosure
@@ -9,7 +11,7 @@ last_reviewed: 2026-11-21
 
 [Return to reloadSol →](https://reloadsol.app/)
 
----
+***
 
 ## Key disclosures
 
@@ -20,13 +22,13 @@ last_reviewed: 2026-11-21
 * **Spot execution only:** Public reloadSol surfaces provide spot market swaps only—no margin, no leverage, no liquidation, and no exchange-side stop-loss or take-profit orders.
 
 {% hint style="warning" %}
-Only trade with funds you can afford to lose completely, and test unfamiliar workflows in [Paper mode](../getting-started/paper-mode.md) before signing live transactions.
+Only trade with funds you can afford to lose completely, and test unfamiliar workflows in [Paper mode](../start-here/paper-mode.md) before signing live transactions.
 {% endhint %}
 
----
+***
 
 ## Related
 
-* [Stay safe on reloadSol](../getting-started/safety-and-security.md)
-* [Risk basics for spot traders](../risk-and-mechanics/risk-basics.md)
+* [Stay safe on reloadSol](../start-here/safety-and-security.md)
+* [Risk basics for spot traders](../understand-risk/risk-basics.md)
 * [Troubleshooting & FAQ](troubleshooting-and-faq.md)

@@ -5,28 +5,28 @@
 ## Start Here
 
 * [Open reloadsol.app ↗](https://reloadsol.app)
-* [Quickstart Guide](getting-started/quickstart.md)
-* [Trading terms in 5 minutes](getting-started/trading-terms.md)
-* [Stay safe on reloadSol](getting-started/safety-and-security.md)
-* [Wallets & Supported Networks](getting-started/wallets-and-networks.md)
-* [Practice with Paper mode](getting-started/paper-mode.md)
-* [What is checked before you sign](getting-started/paper-trading-and-safety.md)
+* [Quickstart Guide](start-here/quickstart.md)
+* [Trading terms in 5 minutes](start-here/trading-terms.md)
+* [Stay safe on reloadSol](start-here/safety-and-security.md)
+* [Wallets & Supported Networks](start-here/wallets-and-networks.md)
+* [Practice with Paper mode](start-here/paper-mode.md)
+* [What is checked before you sign](start-here/paper-trading-and-safety.md)
 
 ## Trade
 
-* [Sweep dust & reclaim rent](trading/bulk-sell-and-dust-reload.md)
-* [Bulk buy up to 4 tokens](trading/bulk-buy.md)
-* [Single swap](trading/single-swap.md)
-* [Order execution, slippage & fees](trading/order-execution-and-mechanics.md)
-* [Charts, watchlist & discovery](trading/charts-watchlist-and-discovery.md)
-* [P&L, trade history & portfolio](trading/pnl-history-and-portfolio.md)
+* [Sweep dust & reclaim rent](trade/bulk-sell-and-dust-reload.md)
+* [Bulk buy up to 4 tokens](trade/bulk-buy.md)
+* [Single swap](trade/single-swap.md)
+* [Order execution, slippage & fees](trade/order-execution-and-mechanics.md)
+* [Charts, watchlist & discovery](trade/charts-watchlist-and-discovery.md)
+* [P\&L, trade history & portfolio](trade/pnl-history-and-portfolio.md)
 
 ## Understand Risk
 
-* [Risk basics for spot traders](risk-and-mechanics/risk-basics.md)
-* [Exit mechanics & protection](risk-and-mechanics/sl-tp-and-exit-protection.md)
-* [Rug detection & knowledge graph](risk-and-mechanics/rug-detection-and-knowledge-graph.md)
-* [Market climate & sizing](risk-and-mechanics/market-regime-and-position-sizing.md)
+* [Risk basics for spot traders](understand-risk/risk-basics.md)
+* [Exit mechanics & protection](understand-risk/sl-tp-and-exit-protection.md)
+* [Rug detection & knowledge graph](understand-risk/rug-detection-and-knowledge-graph.md)
+* [Market climate & sizing](understand-risk/market-regime-and-position-sizing.md)
 
 ## Help
 
