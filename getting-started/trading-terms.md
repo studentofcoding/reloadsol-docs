@@ -49,6 +49,20 @@ last_reviewed: 2026-11-21
 
 ---
 
+## Order types & execution comparison
+
+| Order / Account Concept | Traditional CEX / MetaTrader | On reloadSol (Public Spot) |
+| :--- | :--- | :--- |
+| **Market order / Spot swap** | Fills against central order book | **Supported** — routes across on-chain DEX pools (Jupiter V2 / KyberSwap) |
+| **Batch basket order** | Usually single-ticker only | **Supported** — bulk buy up to **4 tokens** or sweep dust in one coordinated batch |
+| **Limit / Stop-Loss / Trailing order** | Resting exchange-side trigger | **Not offered** — non-custodial wallet; exit manually via Bulk Sell, Swap, or Fast Sell |
+| **Margin / Leverage / Liquidation** | Borrowed collateral with liquidation price | **Not offered** — 100% fully-collateralized spot ownership; zero liquidation risk |
+| **Simulated / Paper trading** | Demo brokerage account | **Supported** — browser-local **Paper mode** (`1 SOL + 1 ETH/day`, no wallet needed) |
+
+*Want to see how entry cost, partial exits, flat fees, ATA rent, and drawdown add up in practice?* Read the [Worked trade P&L example](../trading/pnl-history-and-portfolio.md#worked-trade-example-pl-fees--drawdown).
+
+---
+
 ## Coming from a CEX, MetaTrader, or TradingView
 
 | CEX / MT term | On reloadSol | What changes |

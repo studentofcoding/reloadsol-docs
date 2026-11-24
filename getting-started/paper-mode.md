@@ -35,6 +35,21 @@ Open [Bulk Buy](https://reloadsol.app/buy/solana) or [Bulk Sell](https://reloads
 
 ---
 
+## Paper vs. live execution flow
+
+```mermaid
+flowchart LR
+    U[Trader clicks Buy / Sell] --> M{Paper toggle ON?}
+    M -- Yes --> Q1[Fetch live Jupiter / Kyber quote]
+    Q1 --> L[Record simulated fill in browser localStorage]
+    L --> P[Visible in /pnl & /history under Sim filter]
+    M -- No --> Q2[Fetch fresh execution quote + exact-bytes simulation]
+    Q2 --> W[Wallet signature prompt]
+    W --> C[On-chain settlement + Solscan / Blockscout receipt]
+```
+
+---
+
 ## What Paper mode models (and what it does not)
 
 | Aspect | Modeled in Paper mode? | Details |

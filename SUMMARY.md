@@ -30,6 +30,8 @@
 
 ## Help
 
+* [Routing, architecture & data feeds](help/architecture-and-data-feeds.md)
+* [Release notes](help/release-notes.md)
 * [Troubleshooting & FAQ](help/troubleshooting-and-faq.md)
 * [Risk disclosure](help/risk-disclosure.md)
 * [Interactive lab ↗](https://studentofcoding.github.io/reloadsol-docs/widgets/index.html)

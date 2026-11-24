@@ -9,7 +9,15 @@ last_reviewed: 2026-11-21
 
 [Open Single Swap →](https://reloadsol.app/swap/solana)
 
-![Single Swap Paper mode safety guard on Solana](../.gitbook/assets/screens/desktop/swap-solana.png "Single Swap · Paper mode safety guard")
+{% tabs %}
+{% tab title="Desktop (1440×900)" %}
+![Single Swap Paper mode safety guard on Solana on desktop](../.gitbook/assets/screens/desktop/swap-solana.png)
+{% endtab %}
+
+{% tab title="Mobile (390×844)" %}
+![Single Swap Paper mode safety guard on Solana on mobile](../.gitbook/assets/screens/mobile/swap-solana.png)
+{% endtab %}
+{% endtabs %}
 
 ---
 

@@ -9,7 +9,15 @@ last_reviewed: 2026-11-21
 
 [Open Bulk Buy →](https://reloadsol.app/buy/solana)
 
-![Bulk Buy screen with 4-token cap in Paper mode](../.gitbook/assets/screens/desktop/buy-solana.png "Bulk Buy · Solana 4-token cap (Paper mode)")
+{% tabs %}
+{% tab title="Desktop (1440×900)" %}
+![Bulk Buy screen with 4-token cap in Paper mode on desktop](../.gitbook/assets/screens/desktop/buy-solana.png)
+{% endtab %}
+
+{% tab title="Mobile (390×844)" %}
+![Bulk Buy screen with 4-token cap in Paper mode on mobile](../.gitbook/assets/screens/mobile/buy-solana.png)
+{% endtab %}
+{% endtabs %}
 
 ---
 
@@ -51,6 +59,24 @@ Click **Buy**. reloadSol fetches fresh execution quotes, checks your SOL reserve
 | **Minimum spend** | **$0.50 per token** | Prevents dust-sized buys that lose value to flat network fees. |
 | **Max price impact** | **15%** | Routes above 15% [price impact](../getting-started/trading-terms.md#quote-and-execution) are discarded before signing. |
 | **Solana balance reserve** | Spend + fees + ATA rent | Reserves `~0.00203928 SOL` per new token account automatically. |
+
+---
+
+## Network differences
+
+{% tabs %}
+{% tab title="Solana Mainnet" %}
+* Spend asset: **SOL** (with automatic SOL reserve for priority fees + `~0.00203928 SOL` ATA rent per new token account).
+* Routed via **Jupiter Swap V2**; all up-to-4 legs are simulated with exact bytes before one wallet approval.
+* Available in both **Live** and **Paper mode** (`1 SOL/day` browser-local budget).
+{% endtab %}
+
+{% tab title="Robinhood Chain (4663)" %}
+* Spend assets: **ETH**, **WETH**, or **USDG** (up to **4 tokens** per batch, **$0.50** minimum per token).
+* Routed via **KyberSwap Aggregator** using Permit2 + BatchExecutor or sequential wallet confirmations.
+* Available in both **Live** (allowlisted EVM wallets) and **Paper mode** (`1 ETH/day` browser-local budget).
+{% endtab %}
+{% endtabs %}
 
 {% hint style="warning" %}
 **Partial batch fills on Solana:** Each token leg in a Solana bulk buy is an independent swap transaction signed together. If 3 legs confirm and 1 leg reverts due to sudden slippage, the 3 confirmed legs settle and the 1 failed leg is clearly flagged in [History](https://reloadsol.app/history).

@@ -9,7 +9,15 @@ last_reviewed: 2026-11-21
 
 [Open Knowledge Graph →](https://reloadsol.app/knowledge-graph)
 
-![Public Knowledge Graph explorer on reloadSol](../.gitbook/assets/screens/desktop/knowledge-graph.png "Knowledge Graph · Public explorer")
+{% tabs %}
+{% tab title="Desktop (1440×900)" %}
+![Public Knowledge Graph explorer on reloadSol desktop](../.gitbook/assets/screens/desktop/knowledge-graph.png)
+{% endtab %}
+
+{% tab title="Mobile (390×844)" %}
+![Public Knowledge Graph explorer on reloadSol mobile](../.gitbook/assets/screens/mobile/knowledge-graph.png)
+{% endtab %}
+{% endtabs %}
 
 ---
 

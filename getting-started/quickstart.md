@@ -9,7 +9,15 @@ last_reviewed: 2026-11-21
 
 [Open reloadsol.app →](https://reloadsol.app/)
 
-![reloadSol landing page with Wallet Check](../.gitbook/assets/screens/desktop/home.png "Landing · Signed-out Wallet Check")
+{% tabs %}
+{% tab title="Desktop (1440×900)" %}
+![reloadSol landing page with signed-out Wallet Check on desktop](../.gitbook/assets/screens/desktop/home.png)
+{% endtab %}
+
+{% tab title="Mobile (390×844)" %}
+![reloadSol landing page with signed-out Wallet Check on mobile](../.gitbook/assets/screens/mobile/home.png)
+{% endtab %}
+{% endtabs %}
 
 ---
 
